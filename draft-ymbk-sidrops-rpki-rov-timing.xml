@@ -49,9 +49,9 @@
 
     <abstract>
       <t>
-        This draft is an exploration of and recommendations for timing
-	of Resource Public Key Infrastructure publication, propagation,
-	and use in relying parties and routers.
+        This draft is an exploration of, and recommendations for, timing
+        of Resource Public Key Infrastructure publication, propagation,
+        and use in relying parties and routers.
       </t>
     </abstract>
 
@@ -75,13 +75,13 @@
   <section anchor="Intro" title="Introduction">
     
     <t>
-  	As Resource Public Key Infrastructure (RPKI) based Route Origin
-  	Validation (ROV) becomes deployed in the Internet, the quality
-  	of the routing control plane, and hence timely and accurate
-  	delivery of packets in the data plane, depend more and more on
-  	prompt and accurate propagation of the RPKI data from the
-  	originating Certification Authorities (CAs), to Relying Parties
-  	(RPs), to routers.
+      As Resource Public Key Infrastructure (RPKI) based Route Origin
+      Validation (ROV) becomes deployed in the Internet, the quality of
+      the routing control plane, and hence timely and accurate delivery
+      of packets in the data plane, depend more and more on prompt and
+      accurate propagation of the RPKI data from the originating
+      Certification Authorities (CAs), to Relying Parties (RPs), to
+      routers.
     </t>
     
     <t>
@@ -91,34 +91,33 @@
     </t>
 
     <t>
-  	There are the questions of how frequently a CA publishes, how often an
-  	RP pulls, and how often routers pull from their RP(s).
+      There are the questions of how frequently a CA publishes, how
+      often an RP pulls, and how often routers pull from their RP(s).
     </t>
 
     <t>
-  	For CAs publishing, a few seconds to a minuteseems easily
-  	achieved with reasonable software.  See <xref
-  	target="publish"/>
+      For CAs publishing, a few seconds to a minuteseems easily achieved
+      with reasonable software.  See <xref target="publish"/>.
     </t>
 
     <t>
-  	For RPs pulling, 600s may be optimistic in the short term given
-  	the load it will put on publication services and one notorious
-  	repository which is against spec but it should be achievable in
-  	a while.  An hour would be the longest acceptable window.  See
-  	<xref target="rp-pull"/>
+      For RPs pulling, 600s may be optimistic in the short term given
+      the load it will put on publication services and one notorious
+      repository which is against spec but it should be achievable in
+      a while.  An hour would be the longest acceptable window.  See
+      <xref target="rp-pull"/>
     </t>
 
     <t>
-  	For the router(s) pulling from the RP(s), 300-3600 seconds is a
-  	wide window.  Remember, the rpki-rtr protocol does have the
-  	equivalent of dns notify, where the cache tells the router that
-  	it has some nice tasty new data.  See <xref
-  	target="router-pull"/>
+      For the router(s) pulling from the RP(s), 300-3600 seconds is a
+      wide window.  Remember, the rpki-rtr protocol does have the
+      equivalent of dns notify, where the cache tells the router that
+      it has some nice tasty new data.  See <xref
+      target="router-pull"/>
     </t>
 
     <t>
-  	We discuss each of these in detail below.
+      We discuss each of these in detail below.
     </t>
 
   </section>
@@ -131,62 +130,6 @@
     Prefix Validation, <xref target="RFC6811"/>, and Origin Validation
     Clarifications, <xref target="RFC8481"/>.</t>
 
-  </section>
-
-  <section anchor="Glossary" title="Glossary">
-    <t>
-      The following terms are used with special meaning.
-
-      <list style="hanging">
-        <t hangText="Global RPKI:">
-          The authoritative data of the RPKI are published in a
-          distributed set of servers at the IANA, Regional Internet
-          Registries (RIRs), National Internet Registries (NIRs), and
-          ISPs; see <xref target="RFC6481"/>.
-        </t>
-	
-        <t hangText="Cache:">
-          A cache is a coalesced copy of the published Global RPKI data,
-          periodically fetched or refreshed, directly or indirectly,
-          using the rsync protocol <xref target="RFC5781"/> or some
-          successor.  Relying Party software is used to gather and
-          validate the distributed data of the RPKI into a cache.
-          Trusting this cache further is a matter between the provider
-          of the cache and a Relying Party.
-        </t>
-	
-        <t hangText="Serial Number:">
-          "Serial Number" is a 32&nbhy;bit strictly increasing unsigned
-          integer which wraps from 2^32-1 to 0.  It denotes the logical
-          version of a cache.  A cache increments the value when it
-          successfully updates its data from a parent cache or from
-          primary RPKI data.  While a cache is receiving updates, new
-          incoming data and implicit deletes are associated with the new
-          serial but MUST NOT be sent until the fetch is complete.  A
-          Serial Number is not commensurate between different caches or
-          different protocol versions, nor need it be maintained across
-          resets of the cache server.  See <xref target="RFC1982"/> on
-          DNS Serial Number Arithmetic for too much detail on the topic.
-        </t>
-	
-        <t hangText="Session ID:">
-          When a cache server is started, it generates a Session ID to
-          uniquely identify the instance of the cache and to bind it to
-          the sequence of Serial Numbers that cache instance will
-          generate.  This allows the router to restart a failed session
-          knowing that the Serial Number it is using is commensurate
-          with that of the cache.
-        </t>
-	
-        <t hangText="Payload PDU:">
-          A payload PDU is a protocol message which contains data for
-          use by the router, as opposed to a PDU which conveys the
-          control mechanisms of this protocol.  Prefixes and Router Keys
-          are examples of payload PDUs.
-        </t>
-	
-      </list>
-    </t>
   </section>
 
   <section anchor="Struct" title="Deployment Structure">
