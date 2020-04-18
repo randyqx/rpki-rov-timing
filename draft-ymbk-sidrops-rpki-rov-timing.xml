@@ -144,19 +144,19 @@
           (see <xref target="RFC6481"/>).
         </t>
 	
-        <t hangText="Local Caches:">
-          Local caches are a local set of one or more collected and
+        <t hangText="Relying Parties:">
+          Relying Parties are a local set of one or more collected and
           verified caches of RPKI data.  A Relying Party, e.g., router
           or other client, MUST have a trust relationship with, and a
-          trusted transport channel to, any cache(s) it uses.
+          trusted transport channel to, any RP(s) it uses.
         </t>
 	
         <t hangText="Routers:">
           A router fetches data from a local cache using the protocol
-          described in this document.  It is said to be a client of the
-          cache.  There MAY be mechanisms for the router to assure
-          itself of the authenticity of the cache and to authenticate
-          itself to the cache.
+          described <xref target="RFC8210"/>.  It is said to be a client
+          of the cache.  There MAY be mechanisms for the router to
+          assure itself of the authenticity of the cache and to
+          authenticate itself to the cache.
         </t>
 	
       </list>
@@ -206,6 +206,7 @@
     <?rfc include="reference.RFC.6482"?>
     <?rfc include="reference.RFC.6811"?>
     <?rfc include="reference.RFC.8174"?>
+    <?rfc include="reference.RFC.8210"?>
     <?rfc include="reference.RFC.8481"?>
     </references>
 
