@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+<?rfc sortrefs="yes"?>
+<?rfc subcompact="no"?>
+<?rfc symrefs="yes"?>
+<?rfc toc="yes"?>
+<?rfc tocdepth="3"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+
+<rfc category="info" docName="draft-ymbk-bgp-dis-explore-00" ipr="trust200902">
+
+<front>
+
+    <title abbrev="RPKI-ROV-Timing">
+    Timing Parameters in the RPKI-based Route Origin Validation Supply Chain
+    </title>
+
+    <author fullname="Randy Bush" initials="R." surname="Bush">
+      <organization>Internet Initiative Japan &amp; Arrcus, Inc.</organization>
+      <address>
+        <postal>
+          <street>5147 Crystal Springs</street>
+          <city>Bainbridge Island</city>
+          <region>Washington</region>
+          <code>98110</code>
+          <country>United States of America</country>
+        </postal>
+        <email>randy@psg.com</email>
+      </address>
+    </author>
+
+    <author fullname="Job Snijders" initials="J." surname="Snijders">
+        <organization abbrev="NTT">NTT Ltd.</organization>
+        <address>
+            <postal>
+                <street>Theodorus Majofskistraat 100</street>
+                <code>1065 SZ</code>
+                <city>Amsterdam</city>
+                <country>The Netherlands</country>
+            </postal>
+            <email>job@ntt.net</email>
+        </address>
+    </author>
+	
+    <date />
+
+    <abstract>
+      <t>
+        This draft is an exploration of and recommendations for timing
+	of Resource Public Key Infrastructure publication, propagation,
+	and use in relying parties and routers.
+      </t>
+    </abstract>
+
+  <note title="Requirements Language">
+
+    <t>
+      The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+      "MAY", and "OPTIONAL" in this document are to be interpreted as
+      described in BCP 14 <xref target="RFC2119"/> <xref
+      target="RFC8174"/> when, and only when, they appear in all
+      capitals, as shown here.
+    </t>
+
+  </note>
+
+</front>
+
+<middle>
+
+  <section anchor="Intro" title="Introduction">
+    
+    <t>
+  	As Resource Public Key Infrastructure (RPKI) based Route Origin
+  	Validation (ROV) becomes deployed in the Internet, the quality
+  	of the routing control plane, and hence timely and accurate
+  	delivery of packets in the data plane, depend more and more on
+  	prompt and accurate propagation of the RPKI data from the
+  	originating Certification Authorities (CAs), to Relying Parties
+  	(RPs), to routers.
+    </t>
+    
+    <t>
+      This draft is an exploration of and recommendations for timing
+      of Resource Public Key Infrastructure publication, propagation,
+      and use in relying parties and routers.
+    </t>
+
+    <t>
+  	There are the questions of how frequently a CA publishes, how often an
+  	RP pulls, and how often routers pull from their RP(s).
+    </t>
+
+    <t>
+  	For CAs publishing, a few seconds to a minuteseems easily
+  	achieved with reasonable software.  See <xref
+  	target="publish"/>
+    </t>
+
+    <t>
+  	For RPs pulling, 600s may be optimistic in the short term given
+  	the load it will put on publication services and one notorious
+  	repository which is against spec but it should be achievable in
+  	a while.  An hour would be the longest acceptable window.  See
+  	<xref target="rp-pull"/>
+    </t>
+
+    <t>
+  	For the router(s) pulling from the RP(s), 300-3600 seconds is a
+  	wide window.  Remember, the rpki-rtr protocol does have the
+  	equivalent of dns notify, where the cache tells the router that
+  	it has some nice tasty new data.  See <xref
+  	target="router-pull"/>
+    </t>
+
+    <t>
+  	We discuss each of these in detail below.
+    </t>
+
+  </section>
+
+  <section anchor="reading" title="Suggested Reading">
+
+    <t>It is assumed that the reader understands BGP, <xref
+    target="RFC4271"/>, the RPKI, <xref target="RFC6480"/>, Route Origin
+    Authorizations (ROAs), <xref target="RFC6482"/>, RPKI-based
+    Prefix Validation, <xref target="RFC6811"/>, and Origin Validation
+    Clarifications, <xref target="RFC8481"/>.</t>
+
+  </section>
+
+  <section anchor="Glossary" title="Glossary">
+    <t>
+      The following terms are used with special meaning.
+
+      <list style="hanging">
+        <t hangText="Global RPKI:">
+          The authoritative data of the RPKI are published in a
+          distributed set of servers at the IANA, Regional Internet
+          Registries (RIRs), National Internet Registries (NIRs),
+          and ISPs; see <xref target="RFC6481"/>.
+        </t>
+        <t hangText="Cache:">
+          A cache is a coalesced copy
+          of the published Global RPKI data, periodically fetched or
+          refreshed, directly or indirectly, using the
+          rsync protocol <xref target="RFC5781"/> or some
+          successor.  Relying Party software is used to gather and
+          validate the distributed data of the RPKI into a cache.
+          Trusting this cache further is a matter between the
+          provider of the cache and a Relying Party.
+        </t>
+        <t hangText="Serial Number:">
+          "Serial Number" is a
+          32&nbhy;bit strictly increasing unsigned integer which wraps
+          from 2^32-1 to 0.  It denotes the logical version of a
+          cache.  A cache increments the value when it successfully
+          updates its data from a parent cache or from primary RPKI
+          data.  While a cache is receiving updates, new incoming
+          data and implicit deletes are associated with the new
+          serial but MUST NOT be sent until the fetch is complete.
+          A Serial Number is not commensurate between different
+          caches or different protocol versions, nor need it be
+          maintained across resets of the cache server.  See
+          <xref target="RFC1982"/> on DNS Serial Number Arithmetic
+          for too much detail on the topic.
+        </t>
+        <t hangText="Session ID:">
+          When a cache server is started, it generates a Session ID
+          to uniquely identify the instance of the cache and
+          to bind it to the sequence of Serial Numbers that cache
+          instance will generate.  This allows the router to restart a
+          failed session knowing that the Serial Number it is using is
+          commensurate with that of the cache.
+        </t>
+        <t hangText="Payload PDU:">
+          A payload PDU is a protocol message which contains data for
+          use by the router, as opposed to a PDU which conveys the control
+          mechanisms of this protocol.  Prefixes and Router Keys are
+          examples of payload PDUs.
+        </t>
+      </list>
+    </t>
+  </section>
+
+  <section anchor="Struct" title="Deployment Structure">
+    <t>
+      Deployment of the RPKI to reach routers has a three-level
+      structure as follows:
+      <list style="hanging">
+        <t hangText="Global RPKI:">
+          The authoritative data of the RPKI are published in a
+          distributed set of servers at the IANA, RIRs, NIRs, and
+          ISPs (see <xref target="RFC6481"/>).
+        </t>
+        <t hangText="Local Caches:">
+          Local caches are a local set of one or more collected and
+          verified caches of RPKI data.  A Relying Party, e.g., router
+          or other client, MUST have a trust relationship with, and a
+          trusted transport channel to, any cache(s) it uses.
+        </t>
+        <t hangText="Routers:">
+          A router fetches data from a local cache using the protocol
+          described in this document.  It is said to be a client of the
+          cache.  There MAY be mechanisms for the router to assure
+          itself of the authenticity of the cache and to authenticate
+          itself to the cache.
+        </t>
+      </list>
+    </t>
+  </section>
+
+  <section anchor="publish" title="Certification Authority Publishing">
+    <t>
+     TBD
+    </t>
+  </section>
+
+  <section anchor="rp-pull" title="Replying Party Fetching">
+    <t>
+     TBD
+    </t>
+  </section>
+
+  <section anchor="router-pull" title="Router Updating">
+    <t>
+     TBD
+    </t>
+  </section>
+
+  <section anchor="Security" title="Security Considerations">
+    <t>
+     TBD
+    </t>
+  </section>
+
+  <section anchor="IANA" title="IANA Considerations">
+    <t>
+      None
+    </t>
+  </section>
+
+</middle>
+
+<back>
+    
+  <references title="Normative References">
+    <?rfc include="reference.RFC.1982"?>
+    <?rfc include="reference.RFC.2119"?>
+    <?rfc include="reference.RFC.4271"?>
+    <?rfc include="reference.RFC.5781"?>
+    <?rfc include="reference.RFC.6481"?>
+    <?rfc include="reference.RFC.6482"?>
+    <?rfc include="reference.RFC.6811"?>
+    <?rfc include="reference.RFC.8174"?>
+    <?rfc include="reference.RFC.8481"?>
+    </references>
+
+  <references title="Informative References">
+    <?rfc include="reference.RFC.6480"?>
+    </references>
+
+
+<!--
+    <section anchor="Acknowledgements" title="Acknowledgements">
+      <t>
+        The authors wish to thank .
+      </t>
+    </section>
+-->
+
+</back>
+
+</rfc>
