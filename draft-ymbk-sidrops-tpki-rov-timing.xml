@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+<?rfc sortrefs="yes"?>
+<?rfc subcompact="no"?>
+<?rfc symrefs="yes"?>
+<?rfc toc="yes"?>
+<?rfc tocdepth="3"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+
+<rfc category="info" docName="draft-ymbk-bgp-dis-explore-00" ipr="trust200902">
+
+  <front>
+
+    <title abbrev="BGP-Dicsover-Explore">
+    Exploring BGP Discovery in the Datacenter
+    </title>
+
+    <author fullname="Randy Bush" initials="R." surname="Bush">
+      <organization>Internet Initiative Japan &amp; Arrcus, Inc.</organization>
+      <address>
+        <postal>
+          <street>5147 Crystal Springs</street>
+          <city>Bainbridge Island</city>
+          <region>Washington</region>
+          <code>98110</code>
+          <country>United States of America</country>
+        </postal>
+        <email>randy@psg.com</email>
+      </address>
+    </author>
+
+    <date />
+
+    <abstract>
+      <t>
+        This draft is an exploration of the alternatives and trade-offs
+        in BGP peer discovery in the datacenter.  It is based on
+        discussions in the IDR WG BGP Discovery Design Team.  The
+        current target environment is the datacenter; while keeping an
+        eye not to preclude WAN deployment.  It is not intended to
+        become an RFC.
+      </t>
+    </abstract>
+
+  </front>
+
+  <middle>
+
+    <section anchor="Intro" title="Introduction">
+      <t>
+        This draft is an exploration of the alternatives and trade-offs
+        in BGP peer discovery in the datacenter.  It is based on
+        discussions in the IDR WG BGP Discovery Design Team.  The
+        current target environment is the datacenter; while keeping an
+        eye not to preclude WAN deployment.  It is not intended to
+        become an RFC.
+      </t>
+
+    </section>
+
+    <section anchor="background" title="Background">
+
+      <t>Previous design team discussions converged on a number of
+      aspects of the problem.</t>
+
+      <section anchor="underlay" title="BGP is Underlay">
+
+	<t>
+	  The environment is when BGP is used as the underlay routing
+	  protocol in data center.
+	</t>
+	
+      </section>
+
+      <section anchor="reqs" title="Some Requirements">
+
+	<t>Some requirements have been agreed as follows:</t>
+	<t>
+	  <list style="symbols">
+            <t>
+	      Support IPv4 and IPv6 address families, but not assuming
+	      booth are available.
+	    </t>
+	    <t>
+	      Support discovery of the peering addresses for the BGP
+	      session endpoint.
+	    </t>
+	    <t>
+	      Support using either a devices external interface or one
+	      of its loopback addresses for the BGP session endpoint.
+	    </t>
+	    <t>
+	      Support  discoverery of the peers' ASs.
+	    </t>
+	    <t>
+	      Agree on any BGP session authentication and parameters.
+	    </t>
+	    <t>
+	      Enable Layer 3 link liveness detection, such as BFD.
+	    </t>
+          </list>
+        </t>
+      </section>
+
+      <section anchor="simplicity" title="Simplicity">
+
+	<t>
+	  The goal is to provide the minimal set of configuration
+	  parameters needed by BGP OPEN to successfully start a BGP
+	  peering.  The goal is specifically not to replace or conflict
+	  with data exchanged during BGP OPEN.  Multiple sources of
+	  truth are a recipe for complexity and hence pain.
+	</t>
+	
+	<t>
+	  Simplicity is key.  Features not absolutely needed will not be
+	  included in the design.
+	</t>
+
+      </section>
+      
+    </section>
+    
+    <section anchor="assumptions" title="Assumptions">
+      
+      <t>
+	BGP OPEN will do the heavy lifting.
+      </t>
+
+      <t>
+	BGP discovery should not do anything that could be done by BGP
+	OPEN
+      </t>
+
+      <t>
+	BGP peering will be selective; every speaker does not want to peer
+	with every other speaker.
+      </t>
+
+      <t>
+	Before BGP OPEN, there is discovery and there is choosing peers.
+      </t>
+
+      <t>
+	After discovery, it would be nice if another exchange was not
+	needed before BGP OPEN.
+      </t>
+
+    </section>
+
+    <section anchor="needs" title="Needs of Discovery">
+
+      <t>
+	In discovery, an aspiring BGP speaker needs to discover:
+      </t>
+      <t>
+        <list style="symbols">
+      	<t>
+	  The set of possible peers,
+	</t>
+	<t>
+	  Each one's attributes, a deployment defined set, e.g.: leaf,
+	  spine, ice cream flavor, ...  These attributes are arbitrary
+	  and operator dependednt.
+	</t>
+	<t>
+	  Each one's layer three peering address(es), and
+	</t>
+	<t>
+	  Other attributes required for BGP OPEN to succeed, e.g.
+	  authentication data.
+	</t>
+	</list>
+      </t>
+      
+    </section>
+
+    <section anchor="constraints" title="Constraints">
+
+      <t>
+	The following constraints are assumed:
+      </t>
+      <t>
+        <list style="symbols">
+
+	  <t>
+	    To start, discovery does not know the potential peers' layer
+	    three IP addresses.
+	  </t>
+
+	  <t>
+	    We have to assume peers are on the same network segment or
+	    we will need a higher level routing protocol or well-known
+	    rendezvous servers a la BitCoin or LISP.  this may not bode
+	    well for doing discovery beyond the datacenter..
+	  </t>
+
+	  <t>
+	    We can not assume ipv4 or ipv6, so we can not use ipv4
+	    broadcast or ipv6 link local, though we might be able to try
+	    each and see which one works.
+	  </t>
+
+	  <t>
+	    Otherwise discovery ends up being at layer two, where we
+	    have LLDP and LSOE (or LSOE on acid, L3DL).
+	  </t>
+	</list>
+      </t>
+
+    </section>
+
+    <section anchor="op-config" title="Operator Configuration">
+
+      <t>
+        Operator configuration should be able to decide at lest the
+        following:
+      </t>
+      <t>
+        <list style="symbols">
+
+	  <t>
+	    Which peers to actually try to BGP OPEN,
+	  </t>
+
+	  <t>
+	    What parameters to use, e.g.:
+	  </t>
+	  <t>
+	    <list style="symbols">
+	    
+	    <t>
+	      IP addressing,
+	    </t>
+
+	    <t>
+	      Any special forwarding or routing needed for reaching the
+	      prospective peer, i.e. loopback,
+	    </t>
+
+	    <t>
+	      AS numbering, and
+	    </t>
+
+	    <t>
+	      Authentication.
+	    </t>
+            </list>
+	  </t>
+	</list>
+      </t>
+
+    </section>
+
+  <section anchor="success" title="Success Criteria">
+
+    <t>
+      What are the criteria for success and failure, and how do we
+      measure them?
+    </t>
+    
+    </section>
+
+    <section anchor="Security" title="Security Considerations">
+      <t>
+        None
+      </t>
+    </section>
+
+    <section anchor="IANA" title="IANA Considerations">
+      <t>
+        None
+      </t>
+    </section>
+
+  </middle>
+
+  <back>
+    
+<!--
+    <references title="Normative References">
+    </references>
+
+     <references title="Informative References">
+     </references>
+
+    <section anchor="Acknowledgements" title="Acknowledgements">
+      <t>
+        The authors wish to thank .
+      </t>
+    </section>
+-->
+
+  </back>
+
+</rfc>
