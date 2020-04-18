@@ -198,10 +198,8 @@
 <back>
     
   <references title="Normative References">
-    <?rfc include="reference.RFC.1982"?>
     <?rfc include="reference.RFC.2119"?>
     <?rfc include="reference.RFC.4271"?>
-    <?rfc include="reference.RFC.5781"?>
     <?rfc include="reference.RFC.6481"?>
     <?rfc include="reference.RFC.6482"?>
     <?rfc include="reference.RFC.6811"?>
