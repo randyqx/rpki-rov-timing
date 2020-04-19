@@ -154,11 +154,11 @@
         </t>
 	
         <t hangText="Routers:">
-          A router fetches data from a local cache using the protocol
-          described <xref target="RFC8210"/>.  It is said to be a client
-          of the cache.  There MAY be mechanisms for the router to
-          assure itself of the authenticity of the cache and to
-          authenticate itself to the cache.
+          A router fetches data from a local cache using the RPKI to
+          Router Protocol described in <xref target="RFC8210"/>.  It is
+          said to be a client of the cache.  There are mechanisms for
+          the router to assure itself of the authenticity of the cache
+          and to authenticate itself to the cache.
         </t>
 	
       </list>
@@ -189,10 +189,10 @@
   <section anchor="router-pull" title="Router Updating">
     <t>
      The rate of change of ROA data can be estimated to remain small,
-     maybe on the order of one a minute, with bursts.  Therefore, the
-     routers may update from the (presumed local) relying party cache(s)
-     frequently.  What's more, caches can Notify the routers when there
-     are new data to be fetched.
+     maybe on the order of a few ROAs a minute, but with bursts.
+     Therefore, the routers may update from the (presumed local) relying
+     party cache(s) quite frequently.  What's more, caches can Notify
+     the routers when there are new data to be fetched.
     </t>
   </section>
 
