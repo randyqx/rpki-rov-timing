@@ -134,9 +134,9 @@ Internet-Draft               RPKI-ROV-Timing                  April 2020
    Deployment of the RPKI to reach routers has a three-level structure
    as follows:
 
-   Global RPKI:  The authoritative data of the RPKI are published in a
-      distributed set of servers at the IANA, RIRs, NIRs, and ISPs (see
-      [RFC6481]).
+   Cerification Authorities:  The authoritative data of the RPKI are
+      published in a distributed set of servers, Certification
+      Authorities, at the IANA, RIRs, NIRs, and ISPs (see [RFC6481]).
 
    Relying Parties:  Relying Parties are a local set of one or more
       collected and verified caches of RPKI data.  A Relying Party,
