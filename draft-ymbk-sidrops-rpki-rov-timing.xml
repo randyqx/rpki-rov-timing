@@ -140,10 +140,10 @@
       structure as follows:
       <list style="hanging">
 	
-        <t hangText="Global RPKI:">
+        <t hangText="Cerification Authorities:">
           The authoritative data of the RPKI are published in a
-          distributed set of servers at the IANA, RIRs, NIRs, and ISPs
-          (see <xref target="RFC6481"/>).
+          distributed set of servers, Certification Authorities, at the
+          IANA, RIRs, NIRs, and ISPs (see <xref target="RFC6481"/>).
         </t>
 	
         <t hangText="Relying Parties:">
