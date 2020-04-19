@@ -83,11 +83,19 @@
       Certification Authorities (CAs), to Relying Parties (RPs), to
       routers.
     </t>
+
+    <t>
+      Origination Validation based on stale ROAs allows accidental
+      mis-origination.  While delayed ROA propagation to ROV in routers
+      can cause loss of good traffic.  Though it may not be reasonable
+      today, services such as DDoS cleaners would prefer that ROA
+      publication had immediate effect on routing.
+    </t>
     
     <t>
-      This draft is an exploration of and recommendations for timing
-      of Resource Public Key Infrastructure publication, propagation,
-      and use in relying parties and routers.
+      This draft is an exploration of and recommendations for timing of
+      Resource Public Key Infrastructure publication, propagation, and
+      use in relying parties and routers.
     </t>
 
     <t>

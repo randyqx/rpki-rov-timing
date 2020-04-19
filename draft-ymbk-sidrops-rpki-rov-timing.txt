@@ -72,7 +72,7 @@ Table of Contents
    2.  Related Work  . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Deployment Structure  . . . . . . . . . . . . . . . . . . . .   3
    4.  Certification Authority Publishing  . . . . . . . . . . . . .   3
-   5.  Replying Party Fetching . . . . . . . . . . . . . . . . . . .   3
+   5.  Replying Party Fetching . . . . . . . . . . . . . . . . . . .   4
    6.  Router Updating . . . . . . . . . . . . . . . . . . . . . . .   4
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
@@ -91,6 +91,12 @@ Table of Contents
    Certification Authorities (CAs), to Relying Parties (RPs), to
    routers.
 
+   Origination Validation based on stale ROAs allows accidental mis-
+   origination.  While delayed ROA propagation to ROV in routers can
+   cause loss of good traffic.  Though it may not be reasonable today,
+   services such as DDoS cleaners would prefer that ROA publication had
+   immediate effect on routing.
+
    This draft is an exploration of and recommendations for timing of
    Resource Public Key Infrastructure publication, propagation, and use
    in relying parties and routers.
@@ -101,18 +107,17 @@ Table of Contents
    For CAs publishing, a few seconds to a minuteseems easily achieved
    with reasonable software.  See Section 4.
 
-   For RPs pulling, 600s may be optimistic in the short term given the
-   load it will put on publication services and one notorious repository
-   which is against spec but it should be achievable in a while.  An
-   hour would be the longest acceptable window.  See Section 5
-
-
 
 
 Bush & Snijders         Expires October 21, 2020                [Page 2]
 
 Internet-Draft               RPKI-ROV-Timing                  April 2020
 
+
+   For RPs pulling, 600s may be optimistic in the short term given the
+   load it will put on publication services and one notorious repository
+   which is against spec but it should be achievable in a while.  An
+   hour would be the longest acceptable window.  See Section 5
 
    For the router(s) pulling from the RP(s), 300-3600 seconds is a wide
    window.  Remember, the rpki-rtr protocol does have the equivalent of
@@ -157,11 +162,6 @@ Internet-Draft               RPKI-ROV-Timing                  April 2020
    correct before it becomes current.  RRDP ([RFC8182]) is similar, the
    directory must be atomically correct before it is published.
 
-5.  Replying Party Fetching
-
-   rcynic puts a load on RPKI publication point servers.  Thereofre
-   relying party caches have been discouraged from fetching more
-   frequently than on the order of an hour.  Times as long as a day were
 
 
 
@@ -170,6 +170,11 @@ Bush & Snijders         Expires October 21, 2020                [Page 3]
 Internet-Draft               RPKI-ROV-Timing                  April 2020
 
 
+5.  Replying Party Fetching
+
+   rcynic puts a load on RPKI publication point servers.  Thereofre
+   relying party caches have been discouraged from fetching more
+   frequently than on the order of an hour.  Times as long as a day were
    even suggested.  With RRDP ([RFC8182]), these constraints are no
    longer relevant.
 
@@ -214,17 +219,17 @@ Internet-Draft               RPKI-ROV-Timing                  April 2020
               DOI 10.17487/RFC6482, February 2012,
               <https://www.rfc-editor.org/info/rfc6482>.
 
-   [RFC6486]  Austein, R., Huston, G., Kent, S., and M. Lepinski,
-              "Manifests for the Resource Public Key Infrastructure
-              (RPKI)", RFC 6486, DOI 10.17487/RFC6486, February 2012,
-              <https://www.rfc-editor.org/info/rfc6486>.
-
 
 
 Bush & Snijders         Expires October 21, 2020                [Page 4]
 
 Internet-Draft               RPKI-ROV-Timing                  April 2020
 
+
+   [RFC6486]  Austein, R., Huston, G., Kent, S., and M. Lepinski,
+              "Manifests for the Resource Public Key Infrastructure
+              (RPKI)", RFC 6486, DOI 10.17487/RFC6486, February 2012,
+              <https://www.rfc-editor.org/info/rfc6486>.
 
    [RFC6811]  Mohapatra, P., Scudder, J., Ward, D., Bush, R., and R.
               Austein, "BGP Prefix Origin Validation", RFC 6811,
@@ -267,6 +272,16 @@ Authors' Addresses
    Email: randy@psg.com
 
 
+
+
+
+
+
+Bush & Snijders         Expires October 21, 2020                [Page 5]
+
+Internet-Draft               RPKI-ROV-Timing                  April 2020
+
+
    Job Snijders
    NTT Ltd.
    Theodorus Majofskistraat 100
@@ -277,4 +292,45 @@ Authors' Addresses
 
 
 
-Bush & Snijders         Expires October 21, 2020                [Page 5]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bush & Snijders         Expires October 21, 2020                [Page 6]
