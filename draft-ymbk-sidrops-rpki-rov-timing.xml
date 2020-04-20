@@ -120,11 +120,10 @@
     </t>
 
     <t>
-      For the router(s) pulling from the RP(s), 300-3600 seconds is a
-      wide window.  But, the RPKI-Rtr protocol does have the Serial
-      Notify PDU, the equivalent of DNS Notify, where the cache tells
-      the router that it has new data.  See <xref
-      target="router-pull"/>.
+        For the EBGP router(s) pulling from the RP(s), 5 to 60 minutes is a
+        wide window. But, the RPKI-RTR protocol does have the Serial
+        Notify PDU, the equivalent of DNS Notify, where the cache tells
+        the router that it has new data. See <xref target="router-pull"/>.
     </t>
 
     <t>
@@ -149,7 +148,7 @@
 
   <section anchor="Struct" title="Deployment Structure">
     <t>
-      Deployment of the RPKI to reach routers has a three-level
+      Deployment of the RPKI to reach routers has a multi-tier
       structure as follows:
       <list style="hanging">
 	
@@ -167,12 +166,12 @@
         </t>
 	
         <t hangText="Routers:">
-          A router fetches data from a local cache using the RPKI to
-          Router Protocol described in <xref
-          target="I-D.ietf-sidrops-8210bis"/>.  It is said to be a
-          client of the cache.  There are mechanisms for the router to
-          assure itself of the authenticity of the cache and to
-          authenticate itself to the cache.
+            A router fetches data from a local cache using the RPKI to
+            Router Protocol described in <xref target="I-D.ietf-sidrops-8210bis"/>
+            or some other distribution mechanism.  It is said to be a
+            client of the cache.  There are mechanisms for the router to
+            assure itself of the authenticity of the cache and to
+            authenticate itself to the cache.
         </t>
 	
       </list>
@@ -221,8 +220,9 @@
 
   <section anchor="Security" title="Security Considerations">
     <t>
-     Route Origin Validation is not a security protocol.  It is intended
-     to catch operational errors, and is easily gamed and attacked.
+        The use of Route Origin Validation without any other protection
+        mechanisms is not a security protocol. It is intended
+        to catch operational errors, and is easily gamed and attacked.
     </t>
   </section>
 
