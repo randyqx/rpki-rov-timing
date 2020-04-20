@@ -83,7 +83,7 @@
       of packets in the data plane, depend more and more on prompt and
       accurate propagation of the RPKI data from the originating
       Certification Authorities (CAs), to Relying Parties (RPs), to
-      routers.
+      External Border Gateway Protocol (EBGP) routers.
     </t>
 
     <t>
@@ -91,7 +91,7 @@
       mis-origination.  While delayed ROA propagation to ROV in routers
       can cause loss of good traffic.  Though it may not be reasonable
       today, services such as DDoS cleaners would prefer that ROA
-      publication had immediate effect on routing.
+      publication had near immediate effect on routing.
     </t>
     
     <t>
@@ -111,11 +111,12 @@
     </t>
 
     <t>
-      For RPs pulling, 600s may be optimistic in the short term given
-      the load it will put on publication services and one notorious
-      repository which is against spec but it should be achievable in
-      a while.  An hour would be the longest acceptable window.  See
-      <xref target="rp-pull"/>.
+        The validator instances at Relying Parties periodically retrieve data
+        from the CA publication services. An interval of 10 minutes is
+        considered expedient and somewhat of a burden for publication
+        services, specifically for one a repository which is against
+        spec, but it should be achievable in a while. An hour would be the
+        longest acceptable window. See <xref target="rp-pull"/>.
     </t>
 
     <t>
