@@ -71,15 +71,16 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Related Work  . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Deployment Structure  . . . . . . . . . . . . . . . . . . . .   3
-   4.  Certification Authority Publishing  . . . . . . . . . . . . .   3
+   4.  Certification Authority Publishing  . . . . . . . . . . . . .   4
    5.  Replying Party Fetching . . . . . . . . . . . . . . . . . . .   4
    6.  Router Updating . . . . . . . . . . . . . . . . . . . . . . .   4
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
      9.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .   5
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .   6
+   Appendix A.  Acknowledgements . . . . . . . . . . . . . . . . . .   6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
 
@@ -104,8 +105,7 @@ Table of Contents
    There are the questions of how frequently a CA publishes, how often
    an RP pulls, and how often routers pull from their RP(s).
 
-   For CAs publishing, a few seconds to a minuteseems easily achieved
-   with reasonable software.  See Section 4.
+
 
 
 
@@ -114,15 +114,18 @@ Bush & Snijders         Expires October 22, 2020                [Page 2]
 Internet-Draft               RPKI-ROV-Timing                  April 2020
 
 
+   For CAs publishing, a few seconds to a minute seems easily achieved
+   with reasonable software.  See Section 4.
+
    For RPs pulling, 600s may be optimistic in the short term given the
    load it will put on publication services and one notorious repository
    which is against spec but it should be achievable in a while.  An
-   hour would be the longest acceptable window.  See Section 5
+   hour would be the longest acceptable window.  See Section 5.
 
    For the router(s) pulling from the RP(s), 300-3600 seconds is a wide
    window.  Remember, the RPKI-Rtr protocol does have the Serial Notify
    PDU, the equivalent of DNS Notify, where the cache tells the router
-   that it has some new data.  See Section 6
+   that it has some new data.  See Section 6.
 
    We discuss each of these in detail below.
 
@@ -155,13 +158,10 @@ Internet-Draft               RPKI-ROV-Timing                  April 2020
       router to assure itself of the authenticity of the cache and to
       authenticate itself to the cache.
 
-4.  Certification Authority Publishing
 
-   A principal constraint on publication timing is ensuring the CRL and
-   Manifest ([RFC6486]) are atomically correct with respect to the other
-   repository data.  With rcynic, the directory must be atomically
-   correct before it becomes current.  RRDP ([RFC8182]) is similar, the
-   directory must be atomically correct before it is published.
+
+
+
 
 
 
@@ -170,9 +170,17 @@ Bush & Snijders         Expires October 22, 2020                [Page 3]
 Internet-Draft               RPKI-ROV-Timing                  April 2020
 
 
+4.  Certification Authority Publishing
+
+   A principal constraint on publication timing is ensuring the CRL and
+   Manifest ([RFC6486]) are atomically correct with respect to the other
+   repository data.  With rsync, the directory must be atomically
+   correct before it becomes current.  RRDP ([RFC8182]) is similar, the
+   directory must be atomically correct before it is published.
+
 5.  Replying Party Fetching
 
-   rcynic puts a load on RPKI publication point servers.  Thereofre
+   rsync puts a load on RPKI publication point servers.  Therefore
    relying party caches have been discouraged from fetching more
    frequently than on the order of an hour.  Times as long as a day were
    even suggested.  With RRDP ([RFC8182]), these constraints are no
@@ -207,15 +215,7 @@ Internet-Draft               RPKI-ROV-Timing                  April 2020
               draft-ietf-sidrops-8210bis-00 (work in progress), March
               2020.
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
-              Border Gateway Protocol 4 (BGP-4)", RFC 4271,
-              DOI 10.17487/RFC4271, January 2006,
-              <https://www.rfc-editor.org/info/rfc4271>.
 
 
 
@@ -225,6 +225,16 @@ Bush & Snijders         Expires October 22, 2020                [Page 4]
 
 Internet-Draft               RPKI-ROV-Timing                  April 2020
 
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
+              Border Gateway Protocol 4 (BGP-4)", RFC 4271,
+              DOI 10.17487/RFC4271, January 2006,
+              <https://www.rfc-editor.org/info/rfc4271>.
 
    [RFC6481]  Huston, G., Loomans, R., and G. Michaelson, "A Profile for
               Resource Certificate Repository Structure", RFC 6481,
@@ -260,16 +270,6 @@ Internet-Draft               RPKI-ROV-Timing                  April 2020
               DOI 10.17487/RFC8481, September 2018,
               <https://www.rfc-editor.org/info/rfc8481>.
 
-9.2.  Informative References
-
-   [RFC6480]  Lepinski, M. and S. Kent, "An Infrastructure to Support
-              Secure Internet Routing", RFC 6480, DOI 10.17487/RFC6480,
-              February 2012, <https://www.rfc-editor.org/info/rfc6480>.
-
-Authors' Addresses
-
-
-
 
 
 
@@ -281,6 +281,18 @@ Bush & Snijders         Expires October 22, 2020                [Page 5]
 
 Internet-Draft               RPKI-ROV-Timing                  April 2020
 
+
+9.2.  Informative References
+
+   [RFC6480]  Lepinski, M. and S. Kent, "An Infrastructure to Support
+              Secure Internet Routing", RFC 6480, DOI 10.17487/RFC6480,
+              February 2012, <https://www.rfc-editor.org/info/rfc6480>.
+
+Appendix A.  Acknowledgements
+
+   The authors wish to thank Massimiliano Stucchi.
+
+Authors' Addresses
 
    Randy Bush
    Internet Initiative Japan & Arrcus, Inc.
@@ -298,18 +310,6 @@ Internet-Draft               RPKI-ROV-Timing                  April 2020
    The Netherlands
 
    Email: job@ntt.net
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

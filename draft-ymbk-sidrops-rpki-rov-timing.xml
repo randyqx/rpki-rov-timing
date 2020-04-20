@@ -113,7 +113,7 @@
       the load it will put on publication services and one notorious
       repository which is against spec but it should be achievable in
       a while.  An hour would be the longest acceptable window.  See
-      <xref target="rp-pull"/>
+      <xref target="rp-pull"/>.
     </t>
 
     <t>
@@ -121,7 +121,7 @@
       wide window.  Remember, the RPKI-Rtr protocol does have the Serial
       Notify PDU, the equivalent of DNS Notify, where the cache tells
       the router that it has some new data.  See <xref
-      target="router-pull"/>
+      target="router-pull"/>.
     </t>
 
     <t>
@@ -246,13 +246,11 @@
     </references>
 
 
-<!--
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>
-        The authors wish to thank .
+        The authors wish to thank Massimiliano Stucchi.
       </t>
     </section>
--->
 
 </back>
 
