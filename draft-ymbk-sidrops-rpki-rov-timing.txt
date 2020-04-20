@@ -183,8 +183,10 @@ Internet-Draft               RPKI-ROV-Timing                  April 2020
    The rate of change of ROA data can be estimated to remain small,
    maybe on the order of a few ROAs a minute, but with bursts.
    Therefore, the routers may update from the (presumed local) relying
-   party cache(s) quite frequently.  What's more, caches can Notify the
-   routers when there are new data to be fetched.
+   party cache(s) quite frequently.  Note that
+   [I-D.ietf-sidrops-8210bis] recommends a polling interval of one hour.
+   This conservative timing is because caches can send a Serial Notify
+   PDU to tell routers when there are new data to be fetched.
 
 7.  Security Considerations
 
@@ -214,8 +216,6 @@ Internet-Draft               RPKI-ROV-Timing                  April 2020
               Border Gateway Protocol 4 (BGP-4)", RFC 4271,
               DOI 10.17487/RFC4271, January 2006,
               <https://www.rfc-editor.org/info/rfc4271>.
-
-
 
 
 
