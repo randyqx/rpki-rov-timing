@@ -14,8 +14,8 @@
 
 <front>
 
-    <title abbrev="RPKI-ROV-Timing">
-    Timing Parameters in the RPKI-based Route Origin Validation Supply Chain
+    <title abbrev="RPKI ROV Timing">
+    Timing Parameters in the RPKI based Route Origin Validation Supply Chain
     </title>
 
     <author fullname="Randy Bush" initials="R." surname="Bush">
@@ -49,9 +49,9 @@
 
     <abstract>
       <t>
-        This draft is an exploration of, and recommendations for, timing
-        of Resource Public Key Infrastructure publication, propagation,
-        and use in relying parties and routers.
+        This document explores, and makes recommendations for, timing of
+        Resource Public Key Infrastructure publication, propagation, and
+        use of RPKI ROV data in relying parties and routers.
       </t>
     </abstract>
 
@@ -81,7 +81,7 @@
       of packets in the data plane, depend more and more on prompt and
       accurate propagation of the RPKI data from the originating
       Certification Authorities (CAs), to Relying Parties (RPs), to
-      routers.
+      External Border Gateway Protocol (eBGP) speaking routers.
     </t>
 
     <t>
@@ -89,7 +89,7 @@
       mis-origination.  While delayed ROA propagation to ROV in routers
       can cause loss of good traffic.  Though it may not be reasonable
       today, services such as DDoS cleaners would prefer that ROA
-      publication had immediate effect on routing.
+      publication had almost immediate effect on routing.
     </t>
     
     <t>
@@ -109,18 +109,21 @@
     </t>
 
     <t>
-      For RPs pulling, 600s may be optimistic in the short term given
-      the load it will put on publication services and one notorious
-      repository which is against spec but it should be achievable in
-      a while.  An hour would be the longest acceptable window.  See
-      <xref target="rp-pull"/>.
+      Relying Party validating caches periodically retrieve data from CA
+      publication points..  RPs using rcynic to poll publication points
+      every ten minutes would be a burden today, given the load it will
+      put on publication services, and one notorious repository which is
+      against specification.  But RPs using RRDP impose no such load.
+      So as the infrastructure moves from rcynic to RRDP, fetching every
+      ten minutes would be reasonable.  As it is today, hour would be
+      the longest acceptable window.  See <xref target="rp-pull"/>.
     </t>
 
     <t>
-      For the router(s) pulling from the RP(s), 300-3600 seconds is a
-      wide window.  But, the RPKI-Rtr protocol does have the Serial
-      Notify PDU, the equivalent of DNS Notify, where the cache tells
-      the router that it has new data.  See <xref
+      For the BGP speaking router(s) pulling from the RP(s), five
+      minutes to an hour is a wide window.  But, the RPKI-Rtr protocol
+      does have the Serial Notify PDU, the equivalent of DNS Notify,
+      where the cache tells the router that it has new data.  See <xref
       target="router-pull"/>.
     </t>
 
@@ -161,6 +164,10 @@
           verified caches of RPKI data.  A Relying Party, e.g., router
           or other client, MUST have a trust relationship with, and a
           trusted transport channel to, any RP(s) it uses.
+	</t>
+	<t>
+	  Note that RPs can pull from other RPs, thereby creating a
+	  somewhat complex topology.
         </t>
 	
         <t hangText="Routers:">
@@ -194,7 +201,17 @@
      frequently than on the order of an hour.  Times as long as a day
      were even suggested.  With RRDP (<xref target="RFC8182"/>), these
      constraints are no longer relevant.
-    </t>
+     </t>
+     <t>
+      A number of timers are embedded in the X.509 RPKI data which
+      should also be considered.  E.g. CRL publication commitments,
+      expiration of EE certificates pointing to Manifests and the
+      Manifests themselves.  Some CA operators commonly indicate new CRL
+      information should be available in the next 24 hours.  These
+      24-hour sliding timers combined with fetching RPKI data once a day
+      cause needless brittleness in the face of transient network issues
+      between the CA and RP.
+     </t>
   </section>
 
   <section anchor="router-pull" title="Router Updating">
