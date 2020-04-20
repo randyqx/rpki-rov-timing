@@ -208,6 +208,12 @@
      Serial Notify PDU to tell routers when there are new data to be
      fetched.
     </t>
+    <t>
+      A router SHOULD respond with a Serial Query when it receives a
+      Serial Notify from a cache.  If a router can not respond to a
+      Serial Notify, then it MUST send a periodic Serial Query no less
+      frequently than once an hour.
+    </t>
   </section>
 
   <section anchor="Security" title="Security Considerations">
