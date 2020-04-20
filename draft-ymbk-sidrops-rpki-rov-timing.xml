@@ -180,7 +180,7 @@
     <t>
      A principal constraint on publication timing is ensuring the CRL
      and Manifest (<xref target="RFC6486"/>) are atomically correct with
-     respect to the other repository data.  With rcynic, the directory
+     respect to the other repository data.  With rsync, the directory
      must be atomically correct before it becomes current.  RRDP (<xref
      target="RFC8182"/>) is similar, the directory must be atomically
      correct before it is published.
@@ -189,7 +189,7 @@
 
   <section anchor="rp-pull" title="Replying Party Fetching">
     <t>
-     rcynic puts a load on RPKI publication point servers.  Thereofre
+     rsync puts a load on RPKI publication point servers.  Therefore
      relying party caches have been discouraged from fetching more
      frequently than on the order of an hour.  Times as long as a day
      were even suggested.  With RRDP (<xref target="RFC8182"/>), these
