@@ -196,6 +196,14 @@
      frequently than on the order of an hour.  Times as long as a day
      were even suggested.  With RRDP (<xref target="RFC8182"/>), these
      constraints are no longer relevant.
+     </t>
+     <t>
+        A number of expiration timers are embedded in the X509 aspect of
+        RPKI data which should also be considered. Some CA operators commonly
+        indicate new CRL information should be available in the next 24 hours.
+        These 24-hour sliding timers combined with fetching RPKI data once a
+        day maybe cause needless brittleness in the face of transient
+        network issues between the CA and RP.
     </t>
   </section>
 
