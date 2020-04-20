@@ -93,9 +93,9 @@
     </t>
     
     <t>
-      This draft is an exploration of and recommendations for timing of
-      Resource Public Key Infrastructure publication, propagation, and
-      use in relying parties and routers.
+      This draft is an exploration of, and recommendations for, timing
+      of Resource Public Key Infrastructure publication, propagation,
+      and use in relying party caches and routers.
     </t>
 
     <t>
@@ -118,9 +118,9 @@
 
     <t>
       For the router(s) pulling from the RP(s), 300-3600 seconds is a
-      wide window.  Remember, the rpki-rtr protocol does have the
-      equivalent of dns notify, where the cache tells the router that
-      it has some nice tasty new data.  See <xref
+      wide window.  Remember, the RPKI-Rtr protocol does have the Serial
+      Notify PDU, the equivalent of DNS Notify, where the cache tells
+      the router that it has some new data.  See <xref
       target="router-pull"/>
     </t>
 
@@ -136,9 +136,11 @@
     target="RFC4271"/>, the RPKI <xref target="RFC6480"/>, RPKI
     Manifests <xref target="RFC6486"/>, Route Origin Authorizations
     (ROAs), <xref target="RFC6482"/>, the RPKI Repository Delta Protocol
-    (RRDP) <xref target="RFC8182"/>, RPKI-based Prefix Validation, <xref
-    target="RFC6811"/>, and Origin Validation Clarifications, <xref
-    target="RFC8481"/>.</t>
+    (RRDP) <xref target="RFC8182"/>, The Resource Public Key
+    Infrastructure (RPKI) to Router Protocol <xref
+    target="I-D.ietf-sidrops-8210bis"/>, RPKI-based Prefix Validation,
+    <xref target="RFC6811"/>, and Origin Validation Clarifications,
+    <xref target="RFC8481"/>.</t>
 
   </section>
 
@@ -163,10 +165,11 @@
 	
         <t hangText="Routers:">
           A router fetches data from a local cache using the RPKI to
-          Router Protocol described in <xref target="RFC8210"/>.  It is
-          said to be a client of the cache.  There are mechanisms for
-          the router to assure itself of the authenticity of the cache
-          and to authenticate itself to the cache.
+          Router Protocol described in <xref
+          target="I-D.ietf-sidrops-8210bis"/>.  It is said to be a
+          client of the cache.  There are mechanisms for the router to
+          assure itself of the authenticity of the cache and to
+          authenticate itself to the cache.
         </t>
 	
       </list>
@@ -199,8 +202,11 @@
      The rate of change of ROA data can be estimated to remain small,
      maybe on the order of a few ROAs a minute, but with bursts.
      Therefore, the routers may update from the (presumed local) relying
-     party cache(s) quite frequently.  What's more, caches can Notify
-     the routers when there are new data to be fetched.
+     party cache(s) quite frequently.  Note that <xref
+     target="I-D.ietf-sidrops-8210bis"/> recommends a polling interval
+     of one hour.  This conservative timing is because caches can send a
+     Serial Notify PDU to tell routers when there are new data to be
+     fetched.
     </t>
   </section>
 
@@ -230,8 +236,9 @@
     <?rfc include="reference.RFC.6811"?>
     <?rfc include="reference.RFC.8174"?>
     <?rfc include="reference.RFC.8182"?>
-    <?rfc include="reference.RFC.8210"?>
+<!--    <?rfc include="reference.RFC.8210"?> -->
     <?rfc include="reference.RFC.8481"?>
+    <?rfc include="reference.I-D.ietf-sidrops-8210bis"?>
     </references>
 
   <references title="Informative References">
