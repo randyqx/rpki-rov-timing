@@ -14,8 +14,8 @@
 
 <front>
 
-    <title abbrev="RPKI-ROV-Timing">
-    Timing Parameters in the RPKI-based Route Origin Validation Supply Chain
+    <title abbrev="RPKI Timers">
+        Timing Parameters in the RPKI based BGP Origin Validation Pipeline
     </title>
 
     <author fullname="Randy Bush" initials="R." surname="Bush">
