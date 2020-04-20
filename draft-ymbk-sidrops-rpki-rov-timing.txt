@@ -123,9 +123,9 @@ Internet-Draft               RPKI-ROV-Timing                  April 2020
    hour would be the longest acceptable window.  See Section 5.
 
    For the router(s) pulling from the RP(s), 300-3600 seconds is a wide
-   window.  Remember, the RPKI-Rtr protocol does have the Serial Notify
-   PDU, the equivalent of DNS Notify, where the cache tells the router
-   that it has some new data.  See Section 6.
+   window.  But, the RPKI-Rtr protocol does have the Serial Notify PDU,
+   the equivalent of DNS Notify, where the cache tells the router that
+   it has new data.  See Section 6.
 
    We discuss each of these in detail below.
 

@@ -118,9 +118,9 @@
 
     <t>
       For the router(s) pulling from the RP(s), 300-3600 seconds is a
-      wide window.  Remember, the RPKI-Rtr protocol does have the Serial
+      wide window.  But, the RPKI-Rtr protocol does have the Serial
       Notify PDU, the equivalent of DNS Notify, where the cache tells
-      the router that it has some new data.  See <xref
+      the router that it has new data.  See <xref
       target="router-pull"/>.
     </t>
 
