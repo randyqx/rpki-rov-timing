@@ -48,10 +48,12 @@
     <date />
 
     <abstract>
-      <t>
-        This draft is an exploration of, and recommendations for, timing
-        of Resource Public Key Infrastructure publication, propagation,
-        and use in relying parties and routers.
+        <t>
+            This document explores operational implications of various
+            scheduling aspects of the publication, propagation, and use of
+            Resource Public Key Infrastructure data.
+            The document concludes with a set of recommendations designed to
+            optimise use of RPKI data in the global Internet routing system.
       </t>
     </abstract>
 
