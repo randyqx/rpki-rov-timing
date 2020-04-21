@@ -5,8 +5,8 @@
 Network Working Group                                            R. Bush
 Internet-Draft                  Internet Initiative Japan & Arrcus, Inc.
 Intended status: Informational                               J. Snijders
-Expires: October 22, 2020                                            NTT
-                                                          April 20, 2020
+Expires: October 23, 2020                                            NTT
+                                                          April 21, 2020
 
 
 Timing Parameters in the RPKI based Route Origin Validation Supply Chain
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 22, 2020.
+   This Internet-Draft will expire on October 23, 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Bush & Snijders         Expires October 22, 2020                [Page 1]
+Bush & Snijders         Expires October 23, 2020                [Page 1]
 
 Internet-Draft               RPKI ROV Timing                  April 2020
 
@@ -74,11 +74,12 @@ Table of Contents
    4.  Certification Authority Publishing  . . . . . . . . . . . . .   4
    5.  Replying Party Fetching . . . . . . . . . . . . . . . . . . .   4
    6.  Router Updating . . . . . . . . . . . . . . . . . . . . . . .   4
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .   6
+   7.  Alternative Technologies  . . . . . . . . . . . . . . . . . .   4
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .   5
+     10.2.  Informative References . . . . . . . . . . . . . . . . .   6
    Appendix A.  Acknowledgements . . . . . . . . . . . . . . . . . .   6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
@@ -103,13 +104,12 @@ Table of Contents
    in relying party caches and routers.
 
    There are the questions of how frequently a CA publishes, how often
-   an RP pulls, and how often routers pull from their RP(s).
+   an RP pulls, and how often routers pull from their RP(s).  Overall,
+   the router(s) SHOULD react within an hour of to ROA publication.
 
 
 
-
-
-Bush & Snijders         Expires October 22, 2020                [Page 2]
+Bush & Snijders         Expires October 23, 2020                [Page 2]
 
 Internet-Draft               RPKI ROV Timing                  April 2020
 
@@ -123,7 +123,7 @@ Internet-Draft               RPKI ROV Timing                  April 2020
    on publication services, and one notorious repository which is
    against specification.  But RPs using RRDP impose no such load.  So
    as the infrastructure moves from rcynic to RRDP, fetching every ten
-   minutes would be reasonable.  As it is today, hour would be the
+   minutes would be reasonable.  For rcynix, an hour would be the
    longest acceptable window.  See Section 5.
 
    For the BGP speaking router(s) pulling from the RP(s), five minutes
@@ -165,7 +165,7 @@ Internet-Draft               RPKI ROV Timing                  April 2020
 
 
 
-Bush & Snijders         Expires October 22, 2020                [Page 3]
+Bush & Snijders         Expires October 23, 2020                [Page 3]
 
 Internet-Draft               RPKI ROV Timing                  April 2020
 
@@ -213,26 +213,34 @@ Internet-Draft               RPKI ROV Timing                  April 2020
    then it MUST send a periodic Serial Query no less frequently than
    once an hour.
 
-7.  Security Considerations
+7.  Alternative Technologies
 
-   Route Origin Validation is not a security protocol.  It is intended
-   to catch operational errors, and is easily gamed and attacked.
+   Should the supply chain include components or technologies other than
+   those in IETF documents, the end effect SHOULD be the same; the
+   router(s) SHOULD react to invalid AS origins within the same overall
 
 
 
-
-Bush & Snijders         Expires October 22, 2020                [Page 4]
+Bush & Snijders         Expires October 23, 2020                [Page 4]
 
 Internet-Draft               RPKI ROV Timing                  April 2020
 
 
-8.  IANA Considerations
+   time constraint, an hour at most from ROA creation at the CA
+   publication point to effect in the router.
+
+8.  Security Considerations
+
+   Route Origin Validation is not a security protocol.  It is intended
+   to catch operational errors, and is easily gamed and attacked.
+
+9.  IANA Considerations
 
    None
 
-9.  References
+10.  References
 
-9.1.  Normative References
+10.1.  Normative References
 
    [I-D.ietf-sidrops-8210bis]
               Bush, R. and R. Austein, "The Resource Public Key
@@ -265,6 +273,15 @@ Internet-Draft               RPKI ROV Timing                  April 2020
               (RPKI)", RFC 6486, DOI 10.17487/RFC6486, February 2012,
               <https://www.rfc-editor.org/info/rfc6486>.
 
+
+
+
+
+Bush & Snijders         Expires October 23, 2020                [Page 5]
+
+Internet-Draft               RPKI ROV Timing                  April 2020
+
+
    [RFC6811]  Mohapatra, P., Scudder, J., Ward, D., Bush, R., and R.
               Austein, "BGP Prefix Origin Validation", RFC 6811,
               DOI 10.17487/RFC6811, January 2013,
@@ -273,14 +290,6 @@ Internet-Draft               RPKI ROV Timing                  April 2020
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
-
-
-
-Bush & Snijders         Expires October 22, 2020                [Page 5]
-
-Internet-Draft               RPKI ROV Timing                  April 2020
-
 
    [RFC8182]  Bruijnzeels, T., Muravskiy, O., Weber, B., and R. Austein,
               "The RPKI Repository Delta Protocol (RRDP)", RFC 8182,
@@ -292,7 +301,7 @@ Internet-Draft               RPKI ROV Timing                  April 2020
               DOI 10.17487/RFC8481, September 2018,
               <https://www.rfc-editor.org/info/rfc8481>.
 
-9.2.  Informative References
+10.2.  Informative References
 
    [RFC6480]  Lepinski, M. and S. Kent, "An Infrastructure to Support
               Secure Internet Routing", RFC 6480, DOI 10.17487/RFC6480,
@@ -324,13 +333,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-Bush & Snijders         Expires October 22, 2020                [Page 6]
+Bush & Snijders         Expires October 23, 2020                [Page 6]

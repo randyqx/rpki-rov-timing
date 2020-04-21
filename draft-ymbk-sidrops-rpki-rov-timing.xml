@@ -101,6 +101,8 @@
     <t>
       There are the questions of how frequently a CA publishes, how
       often an RP pulls, and how often routers pull from their RP(s).
+      Overall, the router(s) SHOULD react within an hour of to ROA
+      publication.
     </t>
 
     <t>
@@ -115,8 +117,8 @@
       put on publication services, and one notorious repository which is
       against specification.  But RPs using RRDP impose no such load.
       So as the infrastructure moves from rcynic to RRDP, fetching every
-      ten minutes would be reasonable.  As it is today, hour would be
-      the longest acceptable window.  See <xref target="rp-pull"/>.
+      ten minutes would be reasonable.  For rcynix, an hour would be the
+      longest acceptable window.  See <xref target="rp-pull"/>.
     </t>
 
     <t>
@@ -233,6 +235,16 @@
     </t>
   </section>
 
+  <section anchor="alt-tech" title="Alternative Technologies">
+    <t>
+      Should the supply chain include components or technologies other
+      than those in IETF documents, the end effect SHOULD be the same;
+      the router(s) SHOULD react to invalid AS origins within the same
+      overall time constraint, an hour at most from ROA creation at the
+      CA publication point to effect in the router.
+    </t>
+  </section>
+  
   <section anchor="Security" title="Security Considerations">
     <t>
      Route Origin Validation is not a security protocol.  It is intended
