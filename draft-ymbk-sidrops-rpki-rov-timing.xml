@@ -10,7 +10,7 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 
-<rfc category="info" docName="draft-ymbk-rpki-rov-timing-00" ipr="trust200902">
+<rfc category="info" docName="draft-ymbk-rpki-rov-timing-01" ipr="trust200902">
 
 <front>
 
@@ -203,8 +203,14 @@
      frequently than on the order of an hour.  Times as long as a day
      were even suggested.  With RRDP (<xref target="RFC8182"/>), these
      constraints are no longer relevant.
-     </t>
-     <t>
+    </t>
+    <t>
+      Each validation run of each RP MUST generate the same set of VRPs
+      when presented with identical input, using unexpired records from
+      previous retrievals to deal with only complete failure to retrieve
+      from a PP.
+    </t>
+    <t>
       A number of timers are embedded in the X.509 RPKI data which
       should also be considered.  E.g., CRL publication commitments,
       expiration of EE certificates pointing to Manifests and the
@@ -283,7 +289,8 @@
 
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>
-        The authors wish to thank Massimiliano Stucchi.
+        The authors wish to thank Jay Borkenhagen and Massimiliano
+        Stucchi.
       </t>
     </section>
 
