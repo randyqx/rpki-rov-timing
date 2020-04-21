@@ -204,13 +204,13 @@
      </t>
      <t>
       A number of timers are embedded in the X.509 RPKI data which
-      should also be considered.  E.g. CRL publication commitments,
+      should also be considered.  E.g., CRL publication commitments,
       expiration of EE certificates pointing to Manifests and the
       Manifests themselves.  Some CA operators commonly indicate new CRL
       information should be available in the next 24 hours.  These
-      24-hour sliding timers combined with fetching RPKI data once a day
-      cause needless brittleness in the face of transient network issues
-      between the CA and RP.
+      24-hour sliding timers, combined with fetching RPKI data once a
+      day, cause needless brittleness in the face of transient network
+      issues between the CA and RP.
      </t>
   </section>
 
