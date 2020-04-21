@@ -117,7 +117,7 @@
       put on publication services, and one notorious repository which is
       against specification.  But RPs using RRDP impose no such load.
       So as the infrastructure moves from rcynic to RRDP, fetching every
-      ten minutes would be reasonable.  For rcynix, an hour would be the
+      ten minutes would be reasonable.  For rcynic, an hour would be the
       longest acceptable window.  See <xref target="rp-pull"/>.
     </t>
 
@@ -189,7 +189,7 @@
     <t>
      A principal constraint on publication timing is ensuring the CRL
      and Manifest (<xref target="RFC6486"/>) are atomically correct with
-     respect to the other repository data.  With rsync, the directory
+     respect to the other repository data.  With rcynic, the directory
      must be atomically correct before it becomes current.  RRDP (<xref
      target="RFC8182"/>) is similar, the directory must be atomically
      correct before it is published.
@@ -198,7 +198,7 @@
 
   <section anchor="rp-pull" title="Replying Party Fetching">
     <t>
-     rsync puts a load on RPKI publication point servers.  Therefore
+     rcynic puts a load on RPKI publication point servers.  Therefore
      relying party caches have been discouraged from fetching more
      frequently than on the order of an hour.  Times as long as a day
      were even suggested.  With RRDP (<xref target="RFC8182"/>), these
