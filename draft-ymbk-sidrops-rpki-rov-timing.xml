@@ -101,7 +101,7 @@
     <t>
       There are the questions of how frequently a CA publishes, how
       often an RP pulls, and how often routers pull from their RP(s).
-      Overall, the router(s) SHOULD react within an hour of to ROA
+      Overall, the router(s) SHOULD react within an hour of ROA
       publication.
     </t>
 
