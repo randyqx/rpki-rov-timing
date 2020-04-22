@@ -106,7 +106,7 @@
 
     <t>
       Before the data can start on the CA to router chain, the resource
-      holder (operator) has to create (or delete) the relevant ROA(s)
+      holder (operator) has to create or delete the relevant ROA(s)
       through the CA's operational interface(s).  The operator is
       responsible for anticipating their future needs for ROAs, be aware
       of the propagation time from creating ROAs to effect on routing,
