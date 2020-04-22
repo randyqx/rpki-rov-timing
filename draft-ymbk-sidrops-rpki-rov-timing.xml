@@ -101,7 +101,7 @@
     <t>
       There are the questions of how frequently a CA publishes, how
       often an RP pulls, and how often routers pull from their RP(s).
-      Overall, the router(s) SHOULD react within an hour of to ROA
+      Overall, the router(s) SHOULD react within an hour of ROA
       publication.
     </t>
 
@@ -112,7 +112,7 @@
 
     <t>
       Relying Party validating caches periodically retrieve data from CA
-      publication points..  RPs using rcynic to poll publication points
+      publication points.  RPs using rcynic to poll publication points
       every ten minutes would be a burden today, given the load it will
       put on publication services, and one notorious repository which is
       against specification.  But RPs using RRDP impose no such load.
@@ -196,7 +196,7 @@
     </t>
   </section>
 
-  <section anchor="rp-pull" title="Replying Party Fetching">
+  <section anchor="rp-pull" title="Relying Party Fetching">
     <t>
      rcynic puts a load on RPKI publication point servers.  Therefore
      relying party caches have been discouraged from fetching more
