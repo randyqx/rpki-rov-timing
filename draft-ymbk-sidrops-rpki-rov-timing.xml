@@ -32,6 +32,20 @@
       </address>
     </author>
 
+    <author fullname="Jay Borkenhagen" initials="J." surname="Borkenhagen">
+      <organization>AT&amp;T</organization>
+      <address>
+        <postal>
+          <street>200 Laurel Avenue South</street>
+          <city>Middletown</city>
+          <region>NJ</region>
+          <code>07748</code>
+          <country>United States of America</country>
+          </postal>
+        <email>jayb@att.com</email>
+        </address>
+      </author>
+
     <author fullname="Job Snijders" initials="J." surname="Snijders">
         <organization abbrev="NTT">NTT Ltd.</organization>
         <address>
@@ -81,15 +95,23 @@
       of packets in the data plane, depend more and more on prompt and
       accurate propagation of the RPKI data from the originating
       Certification Authorities (CAs), to Relying Parties (RPs), to
-      External Border Gateway Protocol (eBGP) speaking routers.
+      Border Gateway Protocol (BGP) speaking routers.
     </t>
 
     <t>
       Origination Validation based on stale ROAs allows accidental
       mis-origination.  While delayed ROA propagation to ROV in routers
-      can cause loss of good traffic.  Though it may not be reasonable
-      today, services such as DDoS cleaners would prefer that ROA
-      publication had almost immediate effect on routing.
+      can cause loss of good traffic.  Therefore minimizing propagation
+    of data from CAs to routers is critical..</t>
+
+    <t>
+      Before the data can start on the CA to router chain, the resource
+      holder (operator) has to create the relevant ROA(s) through the
+      CA's operational interface(s).  The operator is responsible for
+      anticipating their future needs for ROAs, be aware of the
+      propagation time from creating ROAs to effect on routing, and
+      SHOULD create ROAs sufficiently in advance of any needs in the
+      routing system.
     </t>
     
     <t>
@@ -112,12 +134,12 @@
 
     <t>
       Relying Party validating caches periodically retrieve data from CA
-      publication points.  RPs using rcynic to poll publication points
+      publication points.  RPs using rsync to poll publication points
       every ten minutes would be a burden today, given the load it will
       put on publication services, and one notorious repository which is
       against specification.  But RPs using RRDP impose no such load.
-      So as the infrastructure moves from rcynic to RRDP, fetching every
-      ten minutes would be reasonable.  For rcynic, an hour would be the
+      So as the infrastructure moves from rsync to RRDP, fetching every
+      ten minutes would be reasonable.  For rsync, an hour would be the
       longest acceptable window.  See <xref target="rp-pull"/>.
     </t>
 
@@ -163,9 +185,7 @@
 	
         <t hangText="Relying Parties:">
           Relying Parties are a local set of one or more collected and
-          verified caches of RPKI data.  A Relying Party, e.g., router
-          or other client, MUST have a trust relationship with, and a
-          trusted transport channel to, any RP(s) it uses.
+          verified caches of RPKI data.
 	</t>
 	<t>
 	  Note that RPs can pull from other RPs, thereby creating a
@@ -173,12 +193,14 @@
         </t>
 	
         <t hangText="Routers:">
-          A router fetches data from a local cache using the RPKI to
-          Router Protocol described in <xref
-          target="I-D.ietf-sidrops-8210bis"/>.  It is said to be a
-          client of the cache.  There are mechanisms for the router to
-          assure itself of the authenticity of the cache and to
-          authenticate itself to the cache.
+          Validating routers fetch data from local caches using the RPKI
+          to Router Protocol, <xref target="I-D.ietf-sidrops-8210bis"/>.
+          Routers are clients of the caches.  Validating routers MUST
+          have a trust relationship with, and a trusted transport
+          channel to, any RP(s) they use.  <xref
+          target="I-D.ietf-sidrops-8210bis"/> specifies mechanisms for
+          the router to assure itself of the authenticity of the cache
+          and to authenticate itself to the cache.
         </t>
 	
       </list>
@@ -189,7 +211,7 @@
     <t>
      A principal constraint on publication timing is ensuring the CRL
      and Manifest (<xref target="RFC6486"/>) are atomically correct with
-     respect to the other repository data.  With rcynic, the directory
+     respect to the other repository data.  With rsync, the directory
      must be atomically correct before it becomes current.  RRDP (<xref
      target="RFC8182"/>) is similar, the directory must be atomically
      correct before it is published.
@@ -198,7 +220,7 @@
 
   <section anchor="rp-pull" title="Relying Party Fetching">
     <t>
-     rcynic puts a load on RPKI publication point servers.  Therefore
+     rsync puts a load on RPKI publication point servers.  Therefore
      relying party caches have been discouraged from fetching more
      frequently than on the order of an hour.  Times as long as a day
      were even suggested.  With RRDP (<xref target="RFC8182"/>), these
@@ -207,8 +229,8 @@
     <t>
       Each validation run of each RP MUST generate the same set of VRPs
       when presented with identical input, using unexpired records from
-      previous retrievals to deal with only complete failure to retrieve
-      from a PP.
+      the most recent successful retrieval to deal with only complete
+      failure to retrieve from a PP.
     </t>
     <t>
       A number of timers are embedded in the X.509 RPKI data which

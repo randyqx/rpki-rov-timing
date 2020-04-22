@@ -4,13 +4,15 @@
 
 Network Working Group                                            R. Bush
 Internet-Draft                  Internet Initiative Japan & Arrcus, Inc.
-Intended status: Informational                               J. Snijders
-Expires: October 23, 2020                                            NTT
-                                                          April 21, 2020
+Intended status: Informational                            J. Borkenhagen
+Expires: October 24, 2020                                           AT&T
+                                                             J. Snijders
+                                                                     NTT
+                                                          April 22, 2020
 
 
 Timing Parameters in the RPKI based Route Origin Validation Supply Chain
-                     draft-ymbk-rpki-rov-timing-00
+                     draft-ymbk-rpki-rov-timing-01
 
 Abstract
 
@@ -41,23 +43,23 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 23, 2020.
+   This Internet-Draft will expire on October 24, 2020.
 
 Copyright Notice
 
    Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
 
 
 
-Bush & Snijders         Expires October 23, 2020                [Page 1]
+Bush, et al.            Expires October 24, 2020                [Page 1]
 
 Internet-Draft               RPKI ROV Timing                  April 2020
 
 
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
    (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
@@ -72,16 +74,16 @@ Table of Contents
    2.  Related Work  . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Deployment Structure  . . . . . . . . . . . . . . . . . . . .   3
    4.  Certification Authority Publishing  . . . . . . . . . . . . .   4
-   5.  Replying Party Fetching . . . . . . . . . . . . . . . . . . .   4
+   5.  Relying Party Fetching  . . . . . . . . . . . . . . . . . . .   4
    6.  Router Updating . . . . . . . . . . . . . . . . . . . . . . .   4
-   7.  Alternative Technologies  . . . . . . . . . . . . . . . . . .   4
+   7.  Alternative Technologies  . . . . . . . . . . . . . . . . . .   5
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
      10.1.  Normative References . . . . . . . . . . . . . . . . . .   5
      10.2.  Informative References . . . . . . . . . . . . . . . . .   6
    Appendix A.  Acknowledgements . . . . . . . . . . . . . . . . . .   6
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
 
@@ -90,14 +92,27 @@ Table of Contents
    routing control plane, and hence timely and accurate delivery of
    packets in the data plane, depend more and more on prompt and
    accurate propagation of the RPKI data from the originating
-   Certification Authorities (CAs), to Relying Parties (RPs), to
-   External Border Gateway Protocol (eBGP) speaking routers.
+   Certification Authorities (CAs), to Relying Parties (RPs), to Border
+   Gateway Protocol (BGP) speaking routers.
 
    Origination Validation based on stale ROAs allows accidental mis-
    origination.  While delayed ROA propagation to ROV in routers can
-   cause loss of good traffic.  Though it may not be reasonable today,
-   services such as DDoS cleaners would prefer that ROA publication had
-   almost immediate effect on routing.
+   cause loss of good traffic.  Therefore minimizing propagation of data
+   from CAs to routers is critical..
+
+   Before the data can start on the CA to router chain, the resource
+   holder (operator) has to create the relevant ROA(s) through the CA's
+   operational interface(s).  The operator is responsible for
+   anticipating their future needs for ROAs, be aware of the propagation
+   time from creating ROAs to effect on routing, and SHOULD create ROAs
+   sufficiently in advance of any needs in the routing system.
+
+
+
+Bush, et al.            Expires October 24, 2020                [Page 2]
+
+Internet-Draft               RPKI ROV Timing                  April 2020
+
 
    This draft is an exploration of, and recommendations for, timing of
    Resource Public Key Infrastructure publication, propagation, and use
@@ -105,26 +120,19 @@ Table of Contents
 
    There are the questions of how frequently a CA publishes, how often
    an RP pulls, and how often routers pull from their RP(s).  Overall,
-   the router(s) SHOULD react within an hour of to ROA publication.
-
-
-
-Bush & Snijders         Expires October 23, 2020                [Page 2]
-
-Internet-Draft               RPKI ROV Timing                  April 2020
-
+   the router(s) SHOULD react within an hour of ROA publication.
 
    For CAs publishing, a few seconds to a minute seems easily achieved
    with reasonable software.  See Section 4.
 
    Relying Party validating caches periodically retrieve data from CA
-   publication points..  RPs using rcynic to poll publication points
-   every ten minutes would be a burden today, given the load it will put
-   on publication services, and one notorious repository which is
-   against specification.  But RPs using RRDP impose no such load.  So
-   as the infrastructure moves from rcynic to RRDP, fetching every ten
-   minutes would be reasonable.  For rcynic, an hour would be the
-   longest acceptable window.  See Section 5.
+   publication points.  RPs using rsync to poll publication points every
+   ten minutes would be a burden today, given the load it will put on
+   publication services, and one notorious repository which is against
+   specification.  But RPs using RRDP impose no such load.  So as the
+   infrastructure moves from rsync to RRDP, fetching every ten minutes
+   would be reasonable.  For rsync, an hour would be the longest
+   acceptable window.  See Section 5.
 
    For the BGP speaking router(s) pulling from the RP(s), five minutes
    to an hour is a wide window.  But, the RPKI-Rtr protocol does have
@@ -152,24 +160,24 @@ Internet-Draft               RPKI ROV Timing                  April 2020
       Authorities, at the IANA, RIRs, NIRs, and ISPs (see [RFC6481]).
 
    Relying Parties:  Relying Parties are a local set of one or more
-      collected and verified caches of RPKI data.  A Relying Party,
-      e.g., router or other client, MUST have a trust relationship with,
-      and a trusted transport channel to, any RP(s) it uses.
-
-      Note that RPs can pull from other RPs, thereby creating a somewhat
-      complex topology.
-
-   Routers:  A router fetches data from a local cache using the RPKI to
-      Router Protocol described in [I-D.ietf-sidrops-8210bis].  It is
-      said to be a client of the cache.  There are mechanisms for the
+      collected and verified caches of RPKI data.
 
 
 
-Bush & Snijders         Expires October 23, 2020                [Page 3]
+
+Bush, et al.            Expires October 24, 2020                [Page 3]
 
 Internet-Draft               RPKI ROV Timing                  April 2020
 
 
+      Note that RPs can pull from other RPs, thereby creating a somewhat
+      complex topology.
+
+   Routers:  Validating routers fetch data from local caches using the
+      RPKI to Router Protocol, [I-D.ietf-sidrops-8210bis].  Routers are
+      clients of the caches.  Validating routers MUST have a trust
+      relationship with, and a trusted transport channel to, any RP(s)
+      they use.  [I-D.ietf-sidrops-8210bis] specifies mechanisms for the
       router to assure itself of the authenticity of the cache and to
       authenticate itself to the cache.
 
@@ -177,17 +185,22 @@ Internet-Draft               RPKI ROV Timing                  April 2020
 
    A principal constraint on publication timing is ensuring the CRL and
    Manifest ([RFC6486]) are atomically correct with respect to the other
-   repository data.  With rcynic, the directory must be atomically
+   repository data.  With rsync, the directory must be atomically
    correct before it becomes current.  RRDP ([RFC8182]) is similar, the
    directory must be atomically correct before it is published.
 
-5.  Replying Party Fetching
+5.  Relying Party Fetching
 
-   rcynic puts a load on RPKI publication point servers.  Therefore
+   rsync puts a load on RPKI publication point servers.  Therefore
    relying party caches have been discouraged from fetching more
    frequently than on the order of an hour.  Times as long as a day were
    even suggested.  With RRDP ([RFC8182]), these constraints are no
    longer relevant.
+
+   Each validation run of each RP MUST generate the same set of VRPs
+   when presented with identical input, using unexpired records from the
+   most recent successful retrieval to deal with only complete failure
+   to retrieve from a PP.
 
    A number of timers are embedded in the X.509 RPKI data which should
    also be considered.  E.g., CRL publication commitments, expiration of
@@ -205,6 +218,14 @@ Internet-Draft               RPKI ROV Timing                  April 2020
    Therefore, the routers may update from the (presumed local) relying
    party cache(s) quite frequently.  Note that
    [I-D.ietf-sidrops-8210bis] recommends a polling interval of one hour.
+
+
+
+Bush, et al.            Expires October 24, 2020                [Page 4]
+
+Internet-Draft               RPKI ROV Timing                  April 2020
+
+
    This conservative timing is because caches can send a Serial Notify
    PDU to tell routers when there are new data to be fetched.
 
@@ -218,14 +239,6 @@ Internet-Draft               RPKI ROV Timing                  April 2020
    Should the supply chain include components or technologies other than
    those in IETF documents, the end effect SHOULD be the same; the
    router(s) SHOULD react to invalid AS origins within the same overall
-
-
-
-Bush & Snijders         Expires October 23, 2020                [Page 4]
-
-Internet-Draft               RPKI ROV Timing                  April 2020
-
-
    time constraint, an hour at most from ROA creation at the CA
    publication point to effect in the router.
 
@@ -258,6 +271,17 @@ Internet-Draft               RPKI ROV Timing                  April 2020
               DOI 10.17487/RFC4271, January 2006,
               <https://www.rfc-editor.org/info/rfc4271>.
 
+
+
+
+
+
+
+Bush, et al.            Expires October 24, 2020                [Page 5]
+
+Internet-Draft               RPKI ROV Timing                  April 2020
+
+
    [RFC6481]  Huston, G., Loomans, R., and G. Michaelson, "A Profile for
               Resource Certificate Repository Structure", RFC 6481,
               DOI 10.17487/RFC6481, February 2012,
@@ -272,15 +296,6 @@ Internet-Draft               RPKI ROV Timing                  April 2020
               "Manifests for the Resource Public Key Infrastructure
               (RPKI)", RFC 6486, DOI 10.17487/RFC6486, February 2012,
               <https://www.rfc-editor.org/info/rfc6486>.
-
-
-
-
-
-Bush & Snijders         Expires October 23, 2020                [Page 5]
-
-Internet-Draft               RPKI ROV Timing                  April 2020
-
 
    [RFC6811]  Mohapatra, P., Scudder, J., Ward, D., Bush, R., and R.
               Austein, "BGP Prefix Origin Validation", RFC 6811,
@@ -309,7 +324,19 @@ Internet-Draft               RPKI ROV Timing                  April 2020
 
 Appendix A.  Acknowledgements
 
-   The authors wish to thank Massimiliano Stucchi.
+   The authors wish to thank Jay Borkenhagen and Massimiliano Stucchi.
+
+
+
+
+
+
+
+
+Bush, et al.            Expires October 24, 2020                [Page 6]
+
+Internet-Draft               RPKI ROV Timing                  April 2020
+
 
 Authors' Addresses
 
@@ -320,6 +347,15 @@ Authors' Addresses
    United States of America
 
    Email: randy@psg.com
+
+
+   Jay Borkenhagen
+   AT&T
+   200 Laurel Avenue South
+   Middletown, NJ  07748
+   United States of America
+
+   Email: jayb@att.com
 
 
    Job Snijders
@@ -333,4 +369,24 @@ Authors' Addresses
 
 
 
-Bush & Snijders         Expires October 23, 2020                [Page 6]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bush, et al.            Expires October 24, 2020                [Page 7]
