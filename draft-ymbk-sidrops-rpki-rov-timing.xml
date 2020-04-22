@@ -112,7 +112,7 @@
 
     <t>
       Relying Party validating caches periodically retrieve data from CA
-      publication points..  RPs using rcynic to poll publication points
+      publication points.  RPs using rcynic to poll publication points
       every ten minutes would be a burden today, given the load it will
       put on publication services, and one notorious repository which is
       against specification.  But RPs using RRDP impose no such load.
