@@ -65,7 +65,7 @@
       <t>
         This document explores, and makes recommendations for, timing of
         Resource Public Key Infrastructure publication, propagation, and
-        use of RPKI ROV data in relying parties and routers.
+        use of RPKI ROV data in Relying Parties and routers.
       </t>
     </abstract>
 
@@ -86,8 +86,15 @@
 
 <middle>
 
-  <section anchor="Intro" title="Introduction">
+  <section anchor="intro" title="Introduction">
     
+    <t>
+      This document explores and recommends timing of Resource Public
+      Key Infrastructure (RPKI) publication, propagation, and use in
+      Certification Authorities (CAs), Relying Parties (RP), caches and
+      routers.
+    </t>
+
     <t>
       As Resource Public Key Infrastructure (RPKI) based Route Origin
       Validation (ROV) becomes deployed in the Internet, the quality of
@@ -99,48 +106,42 @@
     </t>
 
     <t>
-      Origination Validation based on stale ROAs allows accidental
-      mis-origination.  While delayed ROA propagation to ROV in routers
-      can cause loss of good traffic.  Therefore minimizing propagation
-    of data from CAs to routers is critical..</t>
+      Origin Validation based on stale ROAs allows accidental
+      mis-origination.  While delays in ROA propagation to ROV in
+      routers can cause loss of good traffic.  Therefore minimizing
+      propagation time of data from CAs to routers is critical.
+    </t>
 
     <t>
       Before the data can start on the CA to router chain, the resource
-      holder (operator) has to create or delete the relevant ROA(s)
+      holder (operator) MUST create or delete the relevant ROA(s)
       through the CA's operational interface(s).  The operator is
       responsible for anticipating their future needs for ROAs, be aware
       of the propagation time from creating ROAs to effect on routing,
-      and SHOULD create ROAs sufficiently in advance of any needs in the
-      routing system.
+      and SHOULD create, delete, or modify ROAs sufficiently in advance
+      of any needs in the routing system.
     </t>
     
     <t>
-      This draft is an exploration of, and recommendations for, timing
-      of Resource Public Key Infrastructure publication, propagation,
-      and use in relying party caches and routers.
+      There are questions of how frequently a CA publishes, how often an
+      RP pulls, and how often routers pull from their RP(s).  Overall,
+      the router(s) SHOULD react within an hour of ROA publication.
     </t>
 
     <t>
-      There are the questions of how frequently a CA publishes, how
-      often an RP pulls, and how often routers pull from their RP(s).
-      Overall, the router(s) SHOULD react within an hour of ROA
-      publication.
-    </t>
-
-    <t>
-      For CAs publishing, a few seconds to a minute seems easily achieved
-      with reasonable software.  See <xref target="publish"/>.
+      For CAs publishing to PPs, a few seconds to a minute seems easily
+      achieved with reasonable software.  See <xref target="publish"/>.
     </t>
 
     <t>
       Relying Party validating caches periodically retrieve data from CA
       publication points.  RPs using rsync to poll publication points
-      every ten minutes would be a burden today, given the load it will
-      put on publication services, and one notorious repository which is
-      against specification.  RPs using RRDP impose no such load.  As
-      the infrastructure moves from rsync to RRDP, fetching every ten
-      minutes would be reasonable.  For rsync, an hour would be the
-      longest acceptable window.  See <xref target="rp-pull"/>.
+      every ten minutes would be a burden today, given the load it would
+      put on publication services, cf. one notorious repository which is
+      structured against specification.  RPs using RRDP impose no such
+      load.  As the infrastructure moves from rsync to RRDP, fetching
+      every ten minutes would be reasonable.  For rsync, an hour would
+      be the longest acceptable window.  See <xref target="rp-pull"/>.
     </t>
 
     <t>
@@ -157,6 +158,49 @@
 
   </section>
 
+  <section anchor="struct" title="Deployment Structure">
+    <t>
+      The RPKI supply chain from CAs to reach routers has a structure
+      as follows:
+    </t>
+    <t>
+      <list style="hanging">
+
+	<t hangText="Cerification Authorities:">
+	  The authoritative data of the RPKI are published by a
+	  distributed set of servers, Certification Authorities, at the
+	  IANA, RIRs, NIRs, and ISPs (see <xref target="RFC6481"/>).
+	</t>
+
+	<t hangText="Publication Points:">
+	  The CAs publish their authoritative data in publicly
+	  accessible repositories which have a  Publication Point (PP)
+	  for each CA.
+	</t>
+
+	 <t hangText="Relying Parties:">
+	   Relying Parties are a local set of one or more collected and
+	   verified caches of RPKI data which are collected from the PPs.
+	 </t>
+	 <t>
+	   Note that RPs can pull from other RPs, thereby creating a
+	   somewhat complex topology.
+	 </t>
+
+	 <t hangText="Routers:">
+	   Validating routers fetch data from local caches using the RPKI
+	   to Router Protocol, <xref target="I-D.ietf-sidrops-8210bis"/>.
+	   Routers are clients of the caches.  Validating routers MUST
+	   have a trust relationship with, and a trusted transport
+	   channel to, any RP(s) they use.  <xref
+	   target="I-D.ietf-sidrops-8210bis"/> specifies mechanisms for
+	   the router to assure itself of the authenticity of the cache
+	   and to authenticate itself to the cache.
+	 </t>
+      </list>
+    </t>
+  </section>
+
   <section anchor="related" title="Related Work">
 
     <t>It is assumed that the reader understands BGP, <xref
@@ -169,42 +213,6 @@
     <xref target="RFC6811"/>, and Origin Validation Clarifications,
     <xref target="RFC8481"/>.</t>
 
-  </section>
-
-  <section anchor="Struct" title="Deployment Structure">
-    <t>
-      Deployment of the RPKI to reach routers has a three-level
-      structure as follows:
-      <list style="hanging">
-	
-        <t hangText="Cerification Authorities:">
-          The authoritative data of the RPKI are published in a
-          distributed set of servers, Certification Authorities, at the
-          IANA, RIRs, NIRs, and ISPs (see <xref target="RFC6481"/>).
-        </t>
-	
-        <t hangText="Relying Parties:">
-          Relying Parties are a local set of one or more collected and
-          verified caches of RPKI data.
-	</t>
-	<t>
-	  Note that RPs can pull from other RPs, thereby creating a
-	  somewhat complex topology.
-        </t>
-	
-        <t hangText="Routers:">
-          Validating routers fetch data from local caches using the RPKI
-          to Router Protocol, <xref target="I-D.ietf-sidrops-8210bis"/>.
-          Routers are clients of the caches.  Validating routers MUST
-          have a trust relationship with, and a trusted transport
-          channel to, any RP(s) they use.  <xref
-          target="I-D.ietf-sidrops-8210bis"/> specifies mechanisms for
-          the router to assure itself of the authenticity of the cache
-          and to authenticate itself to the cache.
-        </t>
-	
-      </list>
-    </t>
   </section>
 
   <section anchor="publish" title="Certification Authority Publishing">
@@ -223,8 +231,12 @@
      rsync puts a load on RPKI publication point servers.  Therefore
      relying party caches have been discouraged from fetching more
      frequently than on the order of an hour.  Times as long as a day
-     were even suggested.  With RRDP (<xref target="RFC8182"/>), these
-     constraints are no longer relevant.
+     were even suggested.  We conclude that RPs using rsync SHOULD pull
+     from CA publication points once an hour.
+    </t>
+    <t>
+      With RRDP (<xref target="RFC8182"/>), such constraints are no
+      longer relevant.
     </t>
     <t>
       Each validation run of each RP MUST generate the same set of VRPs
@@ -246,12 +258,12 @@
 
   <section anchor="router-pull" title="Router Updating">
     <t>
-     The rate of change of ROA data can be estimated to remain small,
-     maybe on the order of a few ROAs a minute, but with bursts.
-     Therefore, the routers may update from the (presumed local) relying
-     party cache(s) quite frequently.  Note that <xref
+     The rate of change of ROA data can be estimated to remain small, on
+     the order of a few ROAs a minute, but with bursts.  Therefore, the
+     routers may update from the (presumed local) relying party cache(s)
+     quite frequently.  Note that <xref
      target="I-D.ietf-sidrops-8210bis"/> recommends a polling interval
-     of one hour.  This conservative timing is because caches can send a
+     of one hour.  This timing is conservative because caches can send a
      Serial Notify PDU to tell routers when there are new data to be
      fetched.
     </t>
@@ -260,6 +272,16 @@
       Serial Notify from a cache.  If a router can not respond to a
       Serial Notify, then it MUST send a periodic Serial Query no less
       frequently than once an hour.
+    </t>
+  </section>
+
+  <section anchor="router-effect" title="Effect on Routing">
+    <t>
+      Once a router has received an End of Data PDU from a cache, the
+      effect on Route Origin Validation MUST be a matter of seconds to a
+      minute.  The router MAY allow incoming VRPs to affect Origin
+      Validation as they arrive instead of waiting for the End of Data
+      PDU.
     </t>
   </section>
 
@@ -277,6 +299,19 @@
     <t>
      Route Origin Validation is not a security protocol.  It is intended
      to catch operational errors, and is easily gamed and attacked.
+    </t>
+    <t>
+     If an attacker can add, delete, or modify RPKI data, either in
+     repositories or in flight, they can affect routing and thereby
+     steer or damage traffic.  The RPKI system design does much to deter
+     these attacks.  But the 'last mile' from the cache to the router
+     uses transport, not object, security and is vulnerable.  This is
+     discussed in <xref target="I-D.ietf-sidrops-8210bis"/>.
+    </t>
+    <t>
+      Similarly, if an attacker can delay prompt propagation of RPKI
+      data on the supply chain described in this document, they can
+      affect routing, and therefore traffic flow, to their advantage.
     </t>
   </section>
 
