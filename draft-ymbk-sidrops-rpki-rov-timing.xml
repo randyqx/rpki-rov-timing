@@ -196,7 +196,7 @@
     </t>
   </section>
 
-  <section anchor="rp-pull" title="Replying Party Fetching">
+  <section anchor="rp-pull" title="Relying Party Fetching">
     <t>
      rcynic puts a load on RPKI publication point servers.  Therefore
      relying party caches have been discouraged from fetching more
