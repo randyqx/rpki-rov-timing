@@ -46,7 +46,23 @@
         </address>
       </author>
 
-    <author fullname="Job Snijders" initials="J." surname="Snijders">
+    <author initials="T." surname="Bruijnzeels" fullname="Tim Bruijnzeels">
+      <organization>NLnet Labs</organization>
+        <address>
+	  <postal>
+	    <street></street>
+	    <city></city>
+	    <code></code>
+	    <country></country>
+	    <region></region>
+	  </postal>
+	<phone></phone>
+	<email>tim@nlnetlabs.nl</email>
+	<uri>https://www.nlnetlabs.nl/</uri>
+	</address>
+      </author>
+
+      <author fullname="Job Snijders" initials="J." surname="Snijders">
         <organization abbrev="NTT">NTT Ltd.</organization>
         <address>
             <postal>

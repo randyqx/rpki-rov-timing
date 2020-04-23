@@ -5,10 +5,12 @@
 Network Working Group                                            R. Bush
 Internet-Draft                  Internet Initiative Japan & Arrcus, Inc.
 Intended status: Informational                            J. Borkenhagen
-Expires: October 24, 2020                                           AT&T
+Expires: October 25, 2020                                           AT&T
+                                                          T. Bruijnzeels
+                                                              NLnet Labs
                                                              J. Snijders
                                                                      NTT
-                                                          April 22, 2020
+                                                          April 23, 2020
 
 
 Timing Parameters in the RPKI based Route Origin Validation Supply Chain
@@ -43,20 +45,23 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 24, 2020.
+   This Internet-Draft will expire on October 25, 2020.
+
+
+
+
+
+
+
+Bush, et al.            Expires October 25, 2020                [Page 1]
+
+Internet-Draft               RPKI ROV Timing                  April 2020
+
 
 Copyright Notice
 
    Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
-
-
-
-
-Bush, et al.            Expires October 24, 2020                [Page 1]
-
-Internet-Draft               RPKI ROV Timing                  April 2020
-
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
@@ -101,18 +106,18 @@ Table of Contents
    Certification Authorities (CAs), to Relying Parties (RPs), to Border
    Gateway Protocol (BGP) speaking routers.
 
+
+
+
+Bush, et al.            Expires October 25, 2020                [Page 2]
+
+Internet-Draft               RPKI ROV Timing                  April 2020
+
+
    Origin Validation based on stale ROAs allows accidental mis-
    origination.  While delays in ROA propagation to ROV in routers can
    cause loss of good traffic.  Therefore minimizing propagation time of
    data from CAs to routers is critical.
-
-
-
-
-Bush, et al.            Expires October 24, 2020                [Page 2]
-
-Internet-Draft               RPKI ROV Timing                  April 2020
-
 
    Before the data can start on the CA to router chain, the resource
    holder (operator) MUST create or delete the relevant ROA(s) through
@@ -158,17 +163,16 @@ Internet-Draft               RPKI ROV Timing                  April 2020
       publicly accessible repositories which have a Publication Point
       (PP) for each CA.
 
-   Relying Parties:  Relying Parties are a local set of one or more
-      collected and verified caches of RPKI data which are collected
-      from the PPs.
 
 
-
-
-Bush, et al.            Expires October 24, 2020                [Page 3]
+Bush, et al.            Expires October 25, 2020                [Page 3]
 
 Internet-Draft               RPKI ROV Timing                  April 2020
 
+
+   Relying Parties:  Relying Parties are a local set of one or more
+      collected and verified caches of RPKI data which are collected
+      from the PPs.
 
       Note that RPs can pull from other RPs, thereby creating a somewhat
       complex topology.
@@ -213,19 +217,20 @@ Internet-Draft               RPKI ROV Timing                  April 2020
    most recent successful retrieval to deal with only complete failure
    to retrieve from a PP.
 
+
+
+
+
+Bush, et al.            Expires October 25, 2020                [Page 4]
+
+Internet-Draft               RPKI ROV Timing                  April 2020
+
+
    A number of timers are embedded in the X.509 RPKI data which should
    also be considered.  E.g., CRL publication commitments, expiration of
    EE certificates pointing to Manifests and the Manifests themselves.
    Some CA operators commonly indicate new CRL information should be
    available in the next 24 hours.  These 24-hour sliding timers,
-
-
-
-Bush, et al.            Expires October 24, 2020                [Page 4]
-
-Internet-Draft               RPKI ROV Timing                  April 2020
-
-
    combined with fetching RPKI data once a day, cause needless
    brittleness in the face of transient network issues between the CA
    and RP.
@@ -269,18 +274,16 @@ Internet-Draft               RPKI ROV Timing                  April 2020
    repositories or in flight, they can affect routing and thereby steer
    or damage traffic.  The RPKI system design does much to deter these
    attacks.  But the 'last mile' from the cache to the router uses
-   transport, not object, security and is vulnerable.  This is discussed
-   in [I-D.ietf-sidrops-8210bis].
 
 
 
-
-
-
-Bush, et al.            Expires October 24, 2020                [Page 5]
+Bush, et al.            Expires October 25, 2020                [Page 5]
 
 Internet-Draft               RPKI ROV Timing                  April 2020
 
+
+   transport, not object, security and is vulnerable.  This is discussed
+   in [I-D.ietf-sidrops-8210bis].
 
    Similarly, if an attacker can delay prompt propagation of RPKI data
    on the supply chain described in this document, they can affect
@@ -325,18 +328,20 @@ Internet-Draft               RPKI ROV Timing                  April 2020
               (RPKI)", RFC 6486, DOI 10.17487/RFC6486, February 2012,
               <https://www.rfc-editor.org/info/rfc6486>.
 
+
+
+
+
+
+Bush, et al.            Expires October 25, 2020                [Page 6]
+
+Internet-Draft               RPKI ROV Timing                  April 2020
+
+
    [RFC6811]  Mohapatra, P., Scudder, J., Ward, D., Bush, R., and R.
               Austein, "BGP Prefix Origin Validation", RFC 6811,
               DOI 10.17487/RFC6811, January 2013,
               <https://www.rfc-editor.org/info/rfc6811>.
-
-
-
-
-Bush, et al.            Expires October 24, 2020                [Page 6]
-
-Internet-Draft               RPKI ROV Timing                  April 2020
-
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -384,14 +389,16 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-Bush, et al.            Expires October 24, 2020                [Page 7]
+Bush, et al.            Expires October 25, 2020                [Page 7]
 
 Internet-Draft               RPKI ROV Timing                  April 2020
+
+
+   Tim Bruijnzeels
+   NLnet Labs
+
+   Email: tim@nlnetlabs.nl
+   URI:   https://www.nlnetlabs.nl/
 
 
    Job Snijders
@@ -438,11 +445,4 @@ Internet-Draft               RPKI ROV Timing                  April 2020
 
 
 
-
-
-
-
-
-
-
-Bush, et al.            Expires October 24, 2020                [Page 8]
+Bush, et al.            Expires October 25, 2020                [Page 8]
