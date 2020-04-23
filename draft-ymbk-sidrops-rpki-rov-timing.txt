@@ -14,7 +14,7 @@ Expires: October 25, 2020                                           AT&T
 
 
 Timing Parameters in the RPKI based Route Origin Validation Supply Chain
-                     draft-ymbk-rpki-rov-timing-01
+                 draft-ymbk-sidrops-rpki-rov-timing-00
 
 Abstract
 
