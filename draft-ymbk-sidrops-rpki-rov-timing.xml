@@ -201,9 +201,11 @@
       put on publication services, cf. one notorious repository which is
       structured against specification.  RPs using RRDP impose no such
       load.  As the infrastructure moves from rsync to RRDP <xref
-      target="I-D.sidrops-bruijnzeels-deprecate-rsync"/>, fetching every
-      ten minutes would be reasonable.  For rsync, an hour would be the
-      longest acceptable window.  See <xref target="rp-pull"/>.
+      target="I-D.sidrops-bruijnzeels-deprecate-rsync"/>, RRDP is
+      designed for very frequent polling as long as Relying Parties use
+      the "If-Modified-Since" header and there is a caching
+      infrastructure.  For rsync, an hour would be the longest
+      acceptable window.  See <xref target="rp-pull"/>.
     </t>
 
     <t>
@@ -255,8 +257,12 @@
     </t>
     <t>
       With RRDP (<xref target="RFC8182"/>), such constraints are no
-      longer relevant.  Therefor we strongly recommend the migration
-      from rsync to RRDP in <xref
+      longer relevant.  <xref target="RFC8182"/> makes clear that
+      polling as frequently as once a second is acceptable iff Relying
+      Parties use the "If-Modified-Since" header and there is caching.
+      In such circumstances, the RRDP polling interval MUST be no more
+      than ten minutes.  We strongly recommend the migration from rsync
+      to RRDP in <xref
       target="I-D.sidrops-bruijnzeels-deprecate-rsync"/>.
     </t>
     <t>
