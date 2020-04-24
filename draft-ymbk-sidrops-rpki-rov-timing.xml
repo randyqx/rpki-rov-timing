@@ -10,80 +10,80 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 
-<rfc category="info" docName="draft-ymbk-sidrops-rpki-rov-timing-00" ipr="trust200902">
+<rfc category="info" docName="draft-ymbk-sidrops-rpki-rov-timing-01" ipr="trust200902">
 
 <front>
 
-    <title abbrev="RPKI ROV Timing">
-    Timing Parameters in the RPKI based Route Origin Validation Supply Chain
-    </title>
+  <title abbrev="RPKI ROV Timing">
+  Timing Parameters in the RPKI based Route Origin Validation Supply Chain
+  </title>
 
-    <author fullname="Randy Bush" initials="R." surname="Bush">
-      <organization>Internet Initiative Japan &amp; Arrcus, Inc.</organization>
-      <address>
-        <postal>
-          <street>5147 Crystal Springs</street>
-          <city>Bainbridge Island</city>
-          <region>Washington</region>
-          <code>98110</code>
-          <country>United States of America</country>
-        </postal>
-        <email>randy@psg.com</email>
+  <author fullname="Randy Bush" initials="R." surname="Bush">
+    <organization>Internet Initiative Japan &amp; Arrcus, Inc.</organization>
+    <address>
+      <postal>
+	<street>5147 Crystal Springs</street>
+	<city>Bainbridge Island</city>
+	<region>Washington</region>
+	<code>98110</code>
+	<country>United States of America</country>
+      </postal>
+      <email>randy@psg.com</email>
+    </address>
+  </author>
+
+  <author fullname="Jay Borkenhagen" initials="J." surname="Borkenhagen">
+    <organization>AT&amp;T</organization>
+    <address>
+      <postal>
+	<street>200 Laurel Avenue South</street>
+	<city>Middletown</city>
+	<region>NJ</region>
+	<code>07748</code>
+	<country>United States of America</country>
+	</postal>
+      <email>jayb@att.com</email>
       </address>
     </author>
 
-    <author fullname="Jay Borkenhagen" initials="J." surname="Borkenhagen">
-      <organization>AT&amp;T</organization>
+  <author fullname="Tim Bruijnzeels" initials="T." surname="Bruijnzeels">
+    <organization>NLnet Labs</organization>
       <address>
-        <postal>
-          <street>200 Laurel Avenue South</street>
-          <city>Middletown</city>
-          <region>NJ</region>
-          <code>07748</code>
-          <country>United States of America</country>
-          </postal>
-        <email>jayb@att.com</email>
-        </address>
-      </author>
-
-    <author fullname="Tim Bruijnzeels" initials="T." surname="Bruijnzeels">
-      <organization>NLnet Labs</organization>
-        <address>
-	  <postal>
-	    <street></street>
-	    <city></city>
-	    <code></code>
-	    <country></country>
-	    <region></region>
-	  </postal>
-	<phone></phone>
-	<email>tim@nlnetlabs.nl</email>
-	<uri>https://www.nlnetlabs.nl/</uri>
-	</address>
-      </author>
-
-      <author fullname="Job Snijders" initials="J." surname="Snijders">
-        <organization abbrev="NTT">NTT Ltd.</organization>
-        <address>
-            <postal>
-                <street>Theodorus Majofskistraat 100</street>
-                <code>1065 SZ</code>
-                <city>Amsterdam</city>
-                <country>The Netherlands</country>
-            </postal>
-            <email>job@ntt.net</email>
-        </address>
+	<postal>
+	  <street></street>
+	  <city></city>
+	  <code></code>
+	  <country></country>
+	  <region></region>
+	</postal>
+      <phone></phone>
+      <email>tim@nlnetlabs.nl</email>
+      <uri>https://www.nlnetlabs.nl/</uri>
+      </address>
     </author>
-	
-    <date />
 
-    <abstract>
-      <t>
-        This document explores, and makes recommendations for, timing of
-        Resource Public Key Infrastructure publication of ROV data, their
-        propagation, and their use in Relying Parties and routers.
-      </t>
-    </abstract>
+    <author fullname="Job Snijders" initials="J." surname="Snijders">
+      <organization abbrev="NTT">NTT Ltd.</organization>
+      <address>
+	  <postal>
+	      <street>Theodorus Majofskistraat 100</street>
+	      <code>1065 SZ</code>
+	      <city>Amsterdam</city>
+	      <country>The Netherlands</country>
+	  </postal>
+	  <email>job@ntt.net</email>
+      </address>
+  </author>
+
+  <date />
+
+  <abstract>
+    <t>
+      This document explores, and makes recommendations for, timing of
+      Resource Public Key Infrastructure publication of ROV data, their
+      propagation, and their use in Relying Parties and routers.
+    </t>
+  </abstract>
 
   <note title="Requirements Language">
 
@@ -377,13 +377,11 @@
     <?rfc include="reference.I-D.sidrops-bruijnzeels-deprecate-rsync"?>
     </references>
 
-
-    <section anchor="Acknowledgements" title="Acknowledgements">
-      <t>
-        The authors wish to thank Jay Borkenhagen and Massimiliano
-        Stucchi.
-      </t>
-    </section>
+  <section anchor="Acknowledgements" title="Acknowledgements">
+    <t>
+      The authors wish to thank Massimiliano Stucchi.
+    </t>
+  </section>
 
 </back>
 
