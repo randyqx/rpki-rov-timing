@@ -41,10 +41,10 @@
 	<region>NJ</region>
 	<code>07748</code>
 	<country>United States of America</country>
-	</postal>
+      </postal>
       <email>jayb@att.com</email>
-      </address>
-    </author>
+    </address>
+  </author>
 
   <author fullname="Tim Bruijnzeels" initials="T." surname="Bruijnzeels">
     <organization>NLnet Labs</organization>
@@ -59,20 +59,20 @@
       <phone></phone>
       <email>tim@nlnetlabs.nl</email>
       <uri>https://www.nlnetlabs.nl/</uri>
-      </address>
-    </author>
+    </address>
+  </author>
 
-    <author fullname="Job Snijders" initials="J." surname="Snijders">
-      <organization abbrev="NTT">NTT Ltd.</organization>
-      <address>
-	  <postal>
-	      <street>Theodorus Majofskistraat 100</street>
-	      <code>1065 SZ</code>
-	      <city>Amsterdam</city>
-	      <country>The Netherlands</country>
-	  </postal>
-	  <email>job@ntt.net</email>
-      </address>
+  <author fullname="Job Snijders" initials="J." surname="Snijders">
+    <organization abbrev="NTT">NTT Ltd.</organization>
+    <address>
+      <postal>
+	<street>Theodorus Majofskistraat 100</street>
+	<code>1065 SZ</code>
+	<city>Amsterdam</city>
+	<country>The Netherlands</country>
+      </postal>
+      <email>job@ntt.net</email>
+    </address>
   </author>
 
   <date />
