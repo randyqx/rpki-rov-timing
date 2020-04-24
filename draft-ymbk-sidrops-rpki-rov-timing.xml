@@ -174,9 +174,9 @@
     </t>
 
     <t>
-      Before the data can start on the CA to router chain, the resource
-      holder (operator) MUST create or delete the relevant ROA(s)
-      through the CA's operational interface(s).  The operator is
+      Before the data can start on the CA to router supply chain, the
+      resource holder (operator) MUST create or delete the relevant ROA(s)
+      through the CA's operational interface(s). The operator is
       responsible for anticipating their future needs for ROAs, be aware
       of the propagation time from creating ROAs to effect on routing,
       and SHOULD create, delete, or modify ROAs sufficiently in advance
