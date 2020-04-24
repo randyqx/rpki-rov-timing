@@ -111,7 +111,50 @@
       and routers.
     </t>
 
-   <t>
+    <t>
+      The RPKI supply chain from CAs to reach routers has a structure
+      as follows:
+    </t>
+    <t>
+      <list style="hanging">
+
+	<t hangText="Cerification Authorities:">
+	  The authoritative data of the RPKI are published by a
+	  distributed set of Certification Authorities (CAs) at the
+	  IANA, RIRs, NIRs, and ISPs (see <xref target="RFC6481"/>).
+	</t>
+
+	<t hangText="Publication Points:">
+	  The CAs publish their authoritative data in publicly
+	  accessible repositories which have a Publication Point (PP)
+	  for each CA.
+	</t>
+
+	 <t hangText="Relying Parties:">
+	   Relying Parties are a local (to the routers) set of one or
+	   more collected and verified caches of RPKI data which are
+	   collected from the PPs.
+	 </t>
+	 <t>
+	   Currently RPs can pull from other RPs, thereby creating a
+	   somewhat complex topology.
+	 </t>
+
+	 <t hangText="Routers:">
+	   Validating routers fetch data from local RP caches using
+	   the RPKI to Router Protocol, <xref
+	   target="I-D.ietf-sidrops-8210bis"/>.  Routers are clients
+	   of the caches.  Validating routers MUST have a trust
+	   relationship with, and a trusted transport channel to, any
+	   RP(s) they use.  <xref target="I-D.ietf-sidrops-8210bis"/>
+	   specifies mechanisms for the router to assure itself of the
+	   authenticity of the cache(s) and to authenticate itself to
+	   cache(s).
+	 </t>
+      </list>
+    </t>
+
+    <t>
       As Resource Public Key Infrastructure based Route Origin
       Validation (ROV) becomes deployed in the Internet, the quality of
       the routing control plane, and hence timely and accurate delivery
@@ -175,52 +218,7 @@
       We discuss each of these in detail below.
     </t>
 
-  </section>
-
-    <section anchor="struct" title="Deployment Structure">
-      <t>
-	The RPKI supply chain from CAs to reach routers has a structure
-	as follows:
-      </t>
-      <t>
-	<list style="hanging">
-
-	  <t hangText="Cerification Authorities:">
-	    The authoritative data of the RPKI are published by a
-	    distributed set of Certification Authorities (CAs) at the
-	    IANA, RIRs, NIRs, and ISPs (see <xref target="RFC6481"/>).
-	  </t>
-
-	  <t hangText="Publication Points:">
-	    The CAs publish their authoritative data in publicly
-	    accessible repositories which have a Publication Point (PP)
-	    for each CA.
-	  </t>
-
-	   <t hangText="Relying Parties:">
-	     Relying Parties are a local (to the routers) set of one or
-	     more collected and verified caches of RPKI data which are
-	     collected from the PPs.
-	   </t>
-	   <t>
-	     Currently RPs can pull from other RPs, thereby creating a
-	     somewhat complex topology.
-	   </t>
-
-	   <t hangText="Routers:">
-	     Validating routers fetch data from local RP caches using
-	     the RPKI to Router Protocol, <xref
-	     target="I-D.ietf-sidrops-8210bis"/>.  Routers are clients
-	     of the caches.  Validating routers MUST have a trust
-	     relationship with, and a trusted transport channel to, any
-	     RP(s) they use.  <xref target="I-D.ietf-sidrops-8210bis"/>
-	     specifies mechanisms for the router to assure itself of the
-	     authenticity of the cache(s) and to authenticate itself to
-	     cache(s).
-	   </t>
-	</list>
-      </t>
-    </section>
+   </section>
 
    <section anchor="related" title="Related Work">
 
