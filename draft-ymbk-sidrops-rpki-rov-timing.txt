@@ -14,7 +14,7 @@ Expires: October 26, 2020                                           AT&T
 
 
 Timing Parameters in the RPKI based Route Origin Validation Supply Chain
-                 draft-ymbk-sidrops-rpki-rov-timing-00
+                 draft-ymbk-sidrops-rpki-rov-timing-01
 
 Abstract
 
@@ -148,13 +148,13 @@ Internet-Draft               RPKI ROV Timing                  April 2020
    Therefore minimizing propagation time of data from CAs to routers is
    critical.
 
-   Before the data can start on the CA to router chain, the resource
-   holder (operator) MUST create or delete the relevant ROA(s) through
-   the CA's operational interface(s).  The operator is responsible for
-   anticipating their future needs for ROAs, be aware of the propagation
-   time from creating ROAs to effect on routing, and SHOULD create,
-   delete, or modify ROAs sufficiently in advance of any needs in the
-   routing system.
+   Before the data can start on the CA to router supply chain, the
+   resource holder (operator) MUST create or delete the relevant ROA(s)
+   through the CA's operational interface(s).  The operator is
+   responsible for anticipating their future needs for ROAs, be aware of
+   the propagation time from creating ROAs to effect on routing, and
+   SHOULD create, delete, or modify ROAs sufficiently in advance of any
+   needs in the routing system.
 
    There are questions of how frequently a CA publishes, how often an RP
    pulls, and how often routers pull from their RP(s).  Overall, the
@@ -381,7 +381,7 @@ Internet-Draft               RPKI ROV Timing                  April 2020
 
 Appendix A.  Acknowledgements
 
-   The authors wish to thank Jay Borkenhagen and Massimiliano Stucchi.
+   The authors wish to thank Massimiliano Stucchi.
 
 
 
