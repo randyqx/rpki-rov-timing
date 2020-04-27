@@ -326,24 +326,25 @@
   <section anchor="Security" title="Security Considerations">
     
     <t>
-     Despite common misconceptions and marketing, Route Origin
-     Validation is not a security protocol.  It is intended to catch
-     operational errors, and is easily gamed and attacked.
+      Route Origin Validation by itself is not a full solution to secure
+      the Internet routing system. On its own, Origin Validation is
+      intended to catch operational errors, see section 6 of <xref target="RFC6811"/>.
     </t>
-    
     <t>
-     If an attacker can add, delete, or modify RPKI data, either in
-     repositories or in flight, they can affect routing and thereby
-     steer or damage traffic.  The RPKI system design does much to deter
-     these attacks.  But the 'last mile' from the cache to the router
-     uses transport, as opposed to object, security and is vulnerable.
-     This is discussed in <xref target="I-D.ietf-sidrops-8210bis"/>.
+      If an attacker can add, delete, or modify RPKI data, either in
+      repositories or in flight, they can affect routing and thereby
+      steer or damage traffic. The RPKI system design does much to deter
+      these attacks [RFC 6486]. However the 'last mile' (from the cache
+      to the router) uses transport security, as opposed to object security
+      and as such is vulnerable.
+      This is discussed in <xref target="I-D.ietf-sidrops-8210bis"/>
     </t>
-    
     <t>
-      Similarly, if an attacker can delay prompt propagation of RPKI
-      data on the supply chain described in this document, they can
-      affect routing, and therefore traffic flow, to their advantage.
+      Other than attacks on the integrity and completeness of RPKI data
+      available to the RP, the passing of time itself strongly shapes the risk
+      surface. If an attacker can delay prompt propagation of RPKI data on the
+      supply chain described in this document, they can affect routing, and
+      therefore traffic flow, to their advantage.
     </t>
     
   </section>
