@@ -5,12 +5,12 @@
 Network Working Group                                            R. Bush
 Internet-Draft                  Internet Initiative Japan & Arrcus, Inc.
 Intended status: Informational                            J. Borkenhagen
-Expires: October 26, 2020                                           AT&T
+Expires: November 11, 2020                                          AT&T
                                                           T. Bruijnzeels
                                                               NLnet Labs
                                                              J. Snijders
                                                                      NTT
-                                                          April 24, 2020
+                                                            May 10, 2020
 
 
 Timing Parameters in the RPKI based Route Origin Validation Supply Chain
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 26, 2020.
+   This Internet-Draft will expire on November 11, 2020.
 
 
 
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Bush, et al.            Expires October 26, 2020                [Page 1]
+Bush, et al.            Expires November 11, 2020               [Page 1]
 
-Internet-Draft               RPKI ROV Timing                  April 2020
+Internet-Draft               RPKI ROV Timing                    May 2020
 
 
 Copyright Notice
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Bush, et al.            Expires October 26, 2020                [Page 2]
+Bush, et al.            Expires November 11, 2020               [Page 2]
 
-Internet-Draft               RPKI ROV Timing                  April 2020
+Internet-Draft               RPKI ROV Timing                    May 2020
 
 
    Publication Points:  The CAs publish their authoritative data in
@@ -165,9 +165,9 @@ Internet-Draft               RPKI ROV Timing                  April 2020
 
 
 
-Bush, et al.            Expires October 26, 2020                [Page 3]
+Bush, et al.            Expires November 11, 2020               [Page 3]
 
-Internet-Draft               RPKI ROV Timing                  April 2020
+Internet-Draft               RPKI ROV Timing                    May 2020
 
 
    Relying Party validating caches periodically retrieve data from CA
@@ -221,18 +221,13 @@ Internet-Draft               RPKI ROV Timing                  April 2020
 
 
 
-Bush, et al.            Expires October 26, 2020                [Page 4]
+Bush, et al.            Expires November 11, 2020               [Page 4]
 
-Internet-Draft               RPKI ROV Timing                  April 2020
+Internet-Draft               RPKI ROV Timing                    May 2020
 
 
    migration from rsync to RRDP in
    [I-D.sidrops-bruijnzeels-deprecate-rsync].
-
-   Each validation run of each RP MUST generate the same set of
-   Validated ROA Payloads (VRPs) when presented with identical input,
-   using unexpired records from the most recent successful retrieval to
-   deal only with complete failure to retrieve from a PP.
 
    A number of timers are embedded in the X.509 RPKI data which should
    also be considered.  E.g., CRL publication commitments, expiration of
@@ -277,9 +272,14 @@ Internet-Draft               RPKI ROV Timing                  April 2020
 
 
 
-Bush, et al.            Expires October 26, 2020                [Page 5]
+
+
+
+
+
+Bush, et al.            Expires November 11, 2020               [Page 5]
 
-Internet-Draft               RPKI ROV Timing                  April 2020
+Internet-Draft               RPKI ROV Timing                    May 2020
 
 
 8.  Security Considerations
@@ -333,9 +333,9 @@ Internet-Draft               RPKI ROV Timing                  April 2020
 
 
 
-Bush, et al.            Expires October 26, 2020                [Page 6]
+Bush, et al.            Expires November 11, 2020               [Page 6]
 
-Internet-Draft               RPKI ROV Timing                  April 2020
+Internet-Draft               RPKI ROV Timing                    May 2020
 
 
    [RFC6482]  Lepinski, M., Kent, S., and D. Kong, "A Profile for Route
@@ -370,10 +370,10 @@ Internet-Draft               RPKI ROV Timing                  April 2020
 10.2.  Informative References
 
    [I-D.sidrops-bruijnzeels-deprecate-rsync]
-              Bruijnzeels, T., "Resource Public Key Infrastructure
-              (RPKI) Repository Requirements", draft-sidrops-
-              bruijnzeels-deprecate-rsync-00 (work in progress),
-              November 2019.
+              Bruijnzeels, T., Bush, R., and G. Michaelson, "Resource
+              Public Key Infrastructure (RPKI) Repository Requirements",
+              draft-sidrops-bruijnzeels-deprecate-rsync-01 (work in
+              progress), April 2020.
 
    [RFC6480]  Lepinski, M. and S. Kent, "An Infrastructure to Support
               Secure Internet Routing", RFC 6480, DOI 10.17487/RFC6480,
@@ -389,9 +389,9 @@ Appendix A.  Acknowledgements
 
 
 
-Bush, et al.            Expires October 26, 2020                [Page 7]
+Bush, et al.            Expires November 11, 2020               [Page 7]
 
-Internet-Draft               RPKI ROV Timing                  April 2020
+Internet-Draft               RPKI ROV Timing                    May 2020
 
 
 Authors' Addresses
@@ -445,4 +445,4 @@ Authors' Addresses
 
 
 
-Bush, et al.            Expires October 26, 2020                [Page 8]
+Bush, et al.            Expires November 11, 2020               [Page 8]

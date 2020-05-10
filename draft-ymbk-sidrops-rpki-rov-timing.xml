@@ -266,12 +266,6 @@
       target="I-D.sidrops-bruijnzeels-deprecate-rsync"/>.
     </t>
     <t>
-      Each validation run of each RP MUST generate the same set of
-      Validated ROA Payloads (VRPs) when presented with identical input,
-      using unexpired records from the most recent successful retrieval
-      to deal only with complete failure to retrieve from a PP.
-    </t>
-    <t>
       A number of timers are embedded in the X.509 RPKI data which
       should also be considered.  E.g., CRL publication commitments,
       expiration of EE certificates pointing to Manifests, and the
