@@ -4,7 +4,7 @@
 #
 
 # Your nroff document is called foo.txt. Change below as appropiate.
-NAME=draft-ymbk-sidrops-rpki-rov-timing
+NAME=draft-ietf-sidrops-rpki-rov-timing
 DEST=psg.com:public_html
 RSY=rsync --rsh ssh -v -a -l -H -p -t -x --delete
 
@@ -16,4 +16,4 @@ rsy:
 	$(RSY) $(NAME).txt  $(DEST)
 
 clean:
-	rm -f *.html *.txt
+	rm -f *.html
