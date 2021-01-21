@@ -10,7 +10,7 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 
-<rfc category="info" docName="draft-ietf-sidrops-rpki-rov-timing-00" ipr="trust200902">
+<rfc category="info" docName="draft-ietf-sidrops-rpki-rov-timing-01" ipr="trust200902">
 
 <front>
 
@@ -198,14 +198,15 @@
       Relying Party validating caches periodically retrieve data from CA
       publication points.  RPs using rsync to poll publication points
       every ten minutes would be a burden today, given the load it would
-      put on publication services, cf. one notorious repository which is
-      structured against specification.  RPs using RRDP impose no such
+      put on publication services, cf. one notorious repository which
+      was structured against specification.  RPs using RRDP impose less
       load.  As the infrastructure moves from rsync to RRDP <xref
       target="I-D.sidrops-bruijnzeels-deprecate-rsync"/>, RRDP is
       designed for very frequent polling as long as Relying Parties use
       the "If-Modified-Since" header and there is a caching
       infrastructure.  For rsync, an hour would be the longest
-      acceptable window.  See <xref target="rp-pull"/>.
+      acceptable window and half an hour the shortest.  See <xref
+      target="rp-pull"/>.
     </t>
 
     <t>
@@ -251,19 +252,18 @@
     <t>
      rsync puts a load on RPKI publication point servers.  Therefore
      relying party caches have been discouraged from fetching more
-     frequently than on the order of an hour.  Times as long as a day
-     were even suggested.  We conclude that RPs using rsync SHOULD pull
-     from CA publication points once an hour.
+     frequently than on the order of a half hour.  Times as long as a
+     day were even suggested.  We conclude that RPs using rsync SHOULD
+     pull from CA publication points once an hour.
     </t>
     <t>
-      With RRDP (<xref target="RFC8182"/>), such constraints are no
-      longer relevant.  <xref target="RFC8182"/> makes clear that
-      polling as frequently as once a second is acceptable iff Relying
-      Parties use the "If-Modified-Since" header and there is caching.
-      In such circumstances, the RRDP polling interval MUST be no more
-      than ten minutes.  We strongly recommend the migration from rsync
-      to RRDP in <xref
-      target="I-D.sidrops-bruijnzeels-deprecate-rsync"/>.
+      With RRDP (<xref target="RFC8182"/>), such constraints are less
+      relevant.  <xref target="RFC8182"/> makes clear that polling as
+      frequently as once a second is acceptable iff Relying Parties use
+      the "If-Modified-Since" header and there is caching.  In such
+      circumstances, the RRDP polling interval MUST be no more than ten
+      minutes.  The migration from rsync to RRDP in <xref
+      target="I-D.sidrops-bruijnzeels-deprecate-rsync"/> is recommended.
     </t>
     <t>
       A number of timers are embedded in the X.509 RPKI data which
@@ -286,7 +286,8 @@
      target="I-D.ietf-sidrops-8210bis"/> recommends a polling interval
      of one hour.  This timing is conservative because caches can send a
      Serial Notify PDU to tell routers when there are new data to be
-     fetched.
+     fetched.  As the RP cache and the router belong to the same
+     operator, they are free to hammer the RP as much as they wish.
     </t>
     <t>
       A router SHOULD respond with a Serial Query when it receives a
