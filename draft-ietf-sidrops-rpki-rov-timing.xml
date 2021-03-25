@@ -10,7 +10,7 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 
-<rfc category="info" docName="draft-ietf-sidrops-rpki-rov-timing-01" ipr="trust200902">
+<rfc category="info" docName="draft-ietf-sidrops-rpki-rov-timing-02" ipr="trust200902">
 
 <front>
 
@@ -112,8 +112,8 @@
     </t>
 
     <t>
-      The RPKI supply chain from CAs to reach routers has a structure
-      as follows:
+      The RPKI supply chain from CAs to reach routers has the following
+      structure: 
     </t>
     <t>
       <list style="hanging">
@@ -132,22 +132,22 @@
 
 	 <t hangText="Relying Parties:">
 	   Relying Parties are a local (to the routers) set of one or
-	   more collected and verified caches of RPKI data which are
-	   collected from the PPs.
+	   more collected and verified caches of RPKI data which the RPs
+	   collect from the PPs.
 	 </t>
 	 <t>
-	   Currently RPs can pull from other RPs, thereby creating a
+	   Currently RPs can pull from other RPs, thereby allowing a
 	   somewhat complex topology.
 	 </t>
 
 	 <t hangText="Routers:">
-	   Validating routers fetch data from local RP caches using
-	   the RPKI to Router Protocol, <xref
-	   target="I-D.ietf-sidrops-8210bis"/>.  Routers are clients
-	   of the caches.  Validating routers MUST have a trust
+	   Validating routers fetch data from local RP caches using the
+	   RPKI to Router Protocol, <xref
+	   target="I-D.ietf-sidrops-8210bis"/>.  Routers are clients of
+	   the caches.  Validating routers MUST have a trust
 	   relationship with, and a trusted transport channel to, any
 	   RP(s) they use.  <xref target="I-D.ietf-sidrops-8210bis"/>
-	   specifies mechanisms for the router to assure itself of the
+	   specifies mechanisms for a router to assure itself of the
 	   authenticity of the cache(s) and to authenticate itself to
 	   cache(s).
 	 </t>
@@ -170,7 +170,7 @@
       which does not have the authority to do so.  While delays in ROA
       propagation to ROV in routers can cause loss of good traffic.
       Therefore minimizing propagation time of data from CAs to routers
-      is critical.
+      is important.
     </t>
 
     <t>
@@ -202,7 +202,7 @@
       was structured against specification.  RPs using RRDP impose less
       load.  As the infrastructure moves from rsync to RRDP <xref
       target="I-D.sidrops-bruijnzeels-deprecate-rsync"/>, RRDP is
-      designed for very frequent polling as long as Relying Parties use
+      designed for quite frequent polling as long as Relying Parties use
       the "If-Modified-Since" header and there is a caching
       infrastructure.  For rsync, an hour would be the longest
       acceptable window and half an hour the shortest.  See <xref
@@ -210,10 +210,10 @@
     </t>
 
     <t>
-      For the BGP speaking router(s) pulling from the RP(s), five
-      minutes to an hour is a wide window.  But, the RPKI-Rtr protocol
-      does have the Serial Notify PDU, the equivalent of DNS Notify,
-      where the cache tells the router that it has new data.  See <xref
+      For BGP speaking router(s) pulling from the RP(s), five minutes to
+      an hour is a wide window.  But, the RPKI-Rtr protocol does have
+      the Serial Notify PDU, the equivalent of DNS Notify, where the
+      cache tells the router that it has new data.  See <xref
       target="router-pull"/>.
     </t>
 
@@ -241,10 +241,10 @@
     <t>
      A principal constraint on publication timing is ensuring the CRL
      and Manifest (<xref target="RFC6486"/>) are atomically correct with
-     respect to the other repository data.  With rsync, the directory
-     must be atomically correct before it becomes current.  RRDP (<xref
-     target="RFC8182"/>) is similar, the directory must be atomically
-     correct before it is published.
+     respect to the other repository data.  With rsync, the publication
+     point must be atomically correct before it becomes current.  RRDP
+     (<xref target="RFC8182"/>) is similar, the publication point must
+     be atomically correct before it is published.
     </t>
   </section>
 
@@ -259,10 +259,10 @@
     <t>
       With RRDP (<xref target="RFC8182"/>), such constraints are less
       relevant.  <xref target="RFC8182"/> makes clear that polling as
-      frequently as once a second is acceptable iff Relying Parties use
+      frequently as a few seconds is acceptable iff Relying Parties use
       the "If-Modified-Since" header and there is caching.  In such
       circumstances, the RRDP polling interval MUST be no more than ten
-      minutes.  The migration from rsync to RRDP in <xref
+      minutes.  Migration from rsync to RRDP in <xref
       target="I-D.sidrops-bruijnzeels-deprecate-rsync"/> is recommended.
     </t>
     <t>
@@ -271,9 +271,9 @@
       expiration of EE certificates pointing to Manifests, and the
       Manifests themselves.  Some CA operators commonly indicate new CRL
       information should be available in the next 24 hours.  These
-      24-hour sliding timers, combined with fetching RPKI data once a
-      day, cause needless brittleness in the face of transient network
-      issues between the CA and RP.
+      24-hour sliding timers, if combined with fetching RPKI data once a
+      day, would cause needless brittleness in the face of transient
+      network issues between the CA and RP.
      </t>
   </section>
 
@@ -284,10 +284,11 @@
      routers may update from the (presumed local) relying party cache(s)
      quite frequently.  Note that <xref
      target="I-D.ietf-sidrops-8210bis"/> recommends a polling interval
-     of one hour.  This timing is conservative because caches can send a
-     Serial Notify PDU to tell routers when there are new data to be
-     fetched.  As the RP cache and the router belong to the same
-     operator, they are free to hammer the RP as much as they wish.
+     of one hour.  This polling timing is conservative because caches
+     can send a Serial Notify PDU to tell routers when there are new
+     data to be fetched.  As the RP cache and the router belong to the
+     same operator, routers are free to hammer the RPs as much as they
+     wish.
     </t>
     <t>
       A router SHOULD respond with a Serial Query when it receives a
