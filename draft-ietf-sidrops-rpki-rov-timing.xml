@@ -10,7 +10,7 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 
-<rfc category="info" docName="draft-ietf-sidrops-rpki-rov-timing-02" ipr="trust200902">
+<rfc category="info" docName="draft-ietf-sidrops-rpki-rov-timing-03" ipr="trust200902">
 
 <front>
 
@@ -63,15 +63,15 @@
   </author>
 
   <author fullname="Job Snijders" initials="J." surname="Snijders">
-    <organization abbrev="NTT">NTT Ltd.</organization>
+    <organization>Fastly</organization>
     <address>
       <postal>
-	<street>Theodorus Majofskistraat 100</street>
-	<code>1065 SZ</code>
-	<city>Amsterdam</city>
-	<country>The Netherlands</country>
+        <street />
+        <city>Amsterdam</city>
+        <code />
+        <country>Netherlands</country>
       </postal>
-      <email>job@ntt.net</email>
+      <email>job@fastly.com</email>
     </address>
   </author>
 
