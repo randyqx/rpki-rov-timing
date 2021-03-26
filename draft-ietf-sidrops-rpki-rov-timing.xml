@@ -265,9 +265,10 @@
       minutes.
     </t>
     <t>Migration from rsync to RRDP in <xref
-      target="I-D.sidrops-bruijnzeels-deprecate-rsync"/> is recommended.
-      During dual RRDP/rsync operation, should an RP fall over from RRDP
-      to rsync, a jittered delay with a mean of 15 minutes is recommended.
+    target="I-D.sidrops-bruijnzeels-deprecate-rsync"/> is recommended.
+    During dual RRDP/rsync operation, should an RP need to fall over
+    from RRDP to rsync, a jittered delay with a mean of 15 minutes is
+    recommended.
     </t>
     <t>
       A number of timers are embedded in the X.509 RPKI data which
