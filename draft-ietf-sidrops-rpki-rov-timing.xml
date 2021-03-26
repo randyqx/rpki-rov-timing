@@ -262,8 +262,12 @@
       frequently as a few seconds is acceptable iff Relying Parties use
       the "If-Modified-Since" header and there is caching.  In such
       circumstances, the RRDP polling interval MUST be no more than ten
-      minutes.  Migration from rsync to RRDP in <xref
+      minutes.
+    </t>
+    <t>Migration from rsync to RRDP in <xref
       target="I-D.sidrops-bruijnzeels-deprecate-rsync"/> is recommended.
+      During dual RRDP/rsync operation, should an RP fall over from RRDP
+      to rsync, a jittered delay with a mean of 15 minutes is recommended.
     </t>
     <t>
       A number of timers are embedded in the X.509 RPKI data which
