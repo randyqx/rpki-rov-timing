@@ -10,7 +10,7 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 
-<rfc category="info" docName="draft-ietf-sidrops-rpki-rov-timing-03" ipr="trust200902">
+<rfc category="info" docName="draft-ietf-sidrops-rpki-rov-timing-04" ipr="trust200902">
 
 <front>
 
@@ -119,8 +119,8 @@
       <list style="hanging">
 
 	<t hangText="Cerification Authorities:">
-	  The authoritative data of the RPKI are published by a
-	  distributed set of Certification Authorities (CAs) at the
+	  The authoritative data of the RPKI are meant to be published
+	  by a distributed set of Certification Authorities (CAs) at the
 	  IANA, RIRs, NIRs, and ISPs (see <xref target="RFC6481"/>).
 	</t>
 
@@ -167,8 +167,8 @@
     <t>
       Origin Validation based on stale ROAs allows accidental or
       intentional mis-origination; announcement of a prefix by an AS
-      which does not have the authority to do so.  While delays in ROA
-      propagation to ROV in routers can cause loss of good traffic.
+      which does not have the authority to do so.  Delays in ROA
+      propagation to ROV in routers might cause loss of good traffic.
       Therefore minimizing propagation time of data from CAs to routers
       is important.
     </t>
@@ -254,7 +254,7 @@
      relying party caches have been discouraged from fetching more
      frequently than on the order of a half hour.  Times as long as a
      day were even suggested.  We conclude that RPs using rsync SHOULD
-     pull from CA publication points once an hour.
+     pull from CA publication points every 30 to 60 minutes.
     </t>
     <t>
       With RRDP (<xref target="RFC8182"/>), such constraints are less
@@ -264,11 +264,12 @@
       circumstances, the RRDP polling interval MUST be no more than ten
       minutes.
     </t>
-    <t>Migration from rsync to RRDP in <xref
-    target="I-D.sidrops-bruijnzeels-deprecate-rsync"/> is recommended.
-    During dual RRDP/rsync operation, should an RP need to fall over
-    from RRDP to rsync, a jittered delay with a mean of 15 minutes is
-    recommended.
+    <t>
+      Migration from rsync to RRDP in <xref
+      target="I-D.sidrops-bruijnzeels-deprecate-rsync"/> is recommended.
+      During dual RRDP/rsync operation, should an RP need to fall over
+      from RRDP to rsync, a jittered delay with a mean of 15 minutes is
+      recommended.
     </t>
     <t>
       A number of timers are embedded in the X.509 RPKI data which
@@ -292,8 +293,8 @@
      of one hour.  This polling timing is conservative because caches
      can send a Serial Notify PDU to tell routers when there are new
      data to be fetched.  As the RP cache and the router belong to the
-     same operator, routers are free to hammer the RPs as much as they
-     wish.
+     same operator, routers are free to hammer the RPs as frequently as
+     they wish.
     </t>
     <t>
       A router SHOULD respond with a Serial Query when it receives a
@@ -360,22 +361,22 @@
 <back>
     
   <references title="Normative References">
-    <?rfc include="reference.RFC.2119"?>
-    <?rfc include="reference.RFC.4271"?>
-    <?rfc include="reference.RFC.6481"?>
-    <?rfc include="reference.RFC.6486"?>
-    <?rfc include="reference.RFC.6482"?>
-    <?rfc include="reference.RFC.6811"?>
-    <?rfc include="reference.RFC.8174"?>
-    <?rfc include="reference.RFC.8182"?>
-<!--    <?rfc include="reference.RFC.8210"?> -->
-    <?rfc include="reference.RFC.8481"?>
-    <?rfc include="reference.I-D.ietf-sidrops-8210bis"?>
+    <?rfc include="reference.RFC.2119.xml"?>
+    <?rfc include="reference.RFC.4271.xml"?>
+    <?rfc include="reference.RFC.6481.xml"?>
+    <?rfc include="reference.RFC.6486.xml"?>
+    <?rfc include="reference.RFC.6482.xml"?>
+    <?rfc include="reference.RFC.6811.xml"?>
+    <?rfc include="reference.RFC.8174.xml"?>
+    <?rfc include="reference.RFC.8182.xml"?>
+<!--    <?rfc include="reference.RFC.8210.xml"?> -->
+    <?rfc include="reference.RFC.8481.xml"?>
+    <?rfc include="reference.I-D.ietf-sidrops-8210bis.xml"?>
     </references>
 
   <references title="Informative References">
-    <?rfc include="reference.RFC.6480"?>
-    <?rfc include="reference.I-D.sidrops-bruijnzeels-deprecate-rsync"?>
+    <?rfc include="reference.RFC.6480.xml"?>
+    <?rfc include="reference.I-D.sidrops-bruijnzeels-deprecate-rsync.xml"?>
     </references>
 
   <section anchor="Acknowledgements" title="Acknowledgements">
