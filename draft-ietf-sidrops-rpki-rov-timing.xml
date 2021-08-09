@@ -201,7 +201,7 @@
       put on publication services, cf. one notorious repository which
       was structured against specification.  RPs using RRDP impose less
       load.  As the infrastructure moves from rsync to RRDP <xref
-      target="I-D.sidrops-bruijnzeels-deprecate-rsync"/>, RRDP is
+      target="I-D.ietf-sidrops-prefer-rrdp"/>, RRDP is
       designed for quite frequent polling as long as Relying Parties use
       the "If-Modified-Since" header and there is a caching
       infrastructure.  For rsync, an hour would be the longest
@@ -266,7 +266,7 @@
     </t>
     <t>
       Migration from rsync to RRDP in <xref
-      target="I-D.sidrops-bruijnzeels-deprecate-rsync"/> is recommended.
+      target="I-D.ietf-sidrops-prefer-rrdp"/> is recommended.
       During dual RRDP/rsync operation, should an RP need to fall over
       from RRDP to rsync, a jittered delay with a mean of 15 minutes is
       recommended.
@@ -376,7 +376,7 @@
 
   <references title="Informative References">
     <?rfc include="reference.RFC.6480.xml"?>
-    <?rfc include="reference.I-D.sidrops-bruijnzeels-deprecate-rsync.xml"?>
+    <?rfc include="reference.I-D.ietf-sidrops-prefer-rrdp.xml"?>
     </references>
 
   <section anchor="Acknowledgements" title="Acknowledgements">
