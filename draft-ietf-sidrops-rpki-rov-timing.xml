@@ -260,26 +260,30 @@
       With RRDP (<xref target="RFC8182"/>), such constraints are less
       relevant.  <xref target="RFC8182"/> makes clear that polling as
       frequently as a few seconds is acceptable iff Relying Parties use
-      the "If-Modified-Since" header and there is caching.  In such
-      circumstances, the RRDP polling interval MUST be no more than ten
-      minutes.
+      the If-Modified-Since header and there is caching.  Absent use of
+      the If-Modified-Since header, the RRDP polling interval MUST be no
+      more frequent than ten minutes.  Use of the If-Modified-Since
+      header is strongluy recommended.
     </t>
     <t>
       Migration from rsync to RRDP in <xref
-      target="I-D.ietf-sidrops-prefer-rrdp"/> is recommended.
-      During dual RRDP/rsync operation, should an RP need to fall over
-      from RRDP to rsync, a jittered delay with a mean of 15 minutes is
-      recommended.
+      target="I-D.ietf-sidrops-prefer-rrdp"/> is recommended.  During
+      dual RRDP/rsync operation, should an RP need to fall over from
+      RRDP to rsync, a uniformly distribued jittered delay with a mean
+      of half the rsync interval SHOULD be used; so clients falling over
+      to rsync are as spread out as they would be if they used rsync
+      initallly.
     </t>
     <t>
       A number of timers are embedded in the X.509 RPKI data which
       should also be considered.  E.g., CRL publication commitments,
       expiration of EE certificates pointing to Manifests, and the
       Manifests themselves.  Some CA operators commonly indicate new CRL
-      information should be available in the next 24 hours.  These
-      24-hour sliding timers, if combined with fetching RPKI data once a
-      day, would cause needless brittleness in the face of transient
-      network issues between the CA and RP.
+      information should be available in the next 24 hours.  These 24
+      hour sliding timers, when combined with fetching RPKI data once a
+      day, would expose failure windows, especially in the face of
+      transient network issues between the CA and RP.  To ameliorate
+      this, RPs SHOULD update from CAs every hour or two at most.
      </t>
   </section>
 
@@ -381,7 +385,7 @@
 
   <section anchor="Acknowledgements" title="Acknowledgements">
     <t>
-      The authors wish to thank Massimiliano Stucchi.
+      The authors wish to thank Massimiliano Stucchi and Ties de Kock.
     </t>
   </section>
 
