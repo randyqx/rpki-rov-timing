@@ -258,12 +258,12 @@
     </t>
     <t>
       With RRDP (<xref target="RFC8182"/>), such constraints are less
-      relevant.  <xref target="RFC8182"/> makes clear that polling as
-      frequently as a few seconds is acceptable iff Relying Parties use
-      the If-Modified-Since header and there is caching.  Absent use of
-      the If-Modified-Since header, the RRDP polling interval MUST be no
-      more frequent than ten minutes.  Use of the If-Modified-Since
-      header is strongluy recommended.
+      relevant.  <xref target="RFC8182"/> makes clear that polling as no
+      more frequently than once a minute is acceptable iff Relying
+      Parties use the If-Modified-Since header and there is caching.
+      Absent use of the If-Modified-Since header, the RRDP polling
+      interval MUST NOT be more frequent than ten minutes.  Use of the
+      If-Modified-Since header is strongly recommended.
     </t>
     <t>
       Migration from rsync to RRDP in <xref
