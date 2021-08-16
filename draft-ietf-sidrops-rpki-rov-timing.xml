@@ -247,6 +247,13 @@
      (<xref target="RFC8182"/>) is similar, the publication point must
      be atomically correct before it is published.
     </t>
+
+    <t>
+      Operators should beware that there may be implementation dependent
+      delays between instructing their CAs to create and/or update ROAs
+      and the publication of these changes in the PPs.
+    </t>
+
   </section>
 
   <section anchor="rp-pull" title="Relying Party Fetching">
@@ -341,6 +348,7 @@
       ROA around three hours before BGP announcement, or it may not
       propagate globally.
     </t>
+
   </section>
 
 <section anchor="Security" title="Security Considerations">
