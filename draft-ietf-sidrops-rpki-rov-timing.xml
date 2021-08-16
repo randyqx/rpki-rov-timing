@@ -10,7 +10,7 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 
-<rfc category="info" docName="draft-ietf-sidrops-rpki-rov-timing-04" ipr="trust200902">
+<rfc category="info" docName="draft-ietf-sidrops-rpki-rov-timing-05" ipr="trust200902">
 
 <front>
 
@@ -127,7 +127,8 @@
 	<t hangText="Publication Points:">
 	  The CAs publish their authoritative data in publicly
 	  accessible repositories which have a Publication Point (PP)
-	  for each CA.
+	  for each CA.  A CA may publish directly at a PP or may use the
+	  RPKI Publication Protocol <xref target="RFC8181"/>.
 	</t>
 
 	 <t hangText="Relying Parties:">
@@ -329,12 +330,27 @@
     </t>
   </section>
   
-  <section anchor="Security" title="Security Considerations">
+  <section anchor="op-expect" title="Operational Expectations">
+    <t>
+      Assuming the above recommendations, in worst conditions such as an
+      RPKI-rtr Notify PDU being ignored, it may take up to two hours for
+      a new ROA to propagate from creation at the CA to BGP speaking
+      routers.  Therefore it is RECOMMENDED that planned changes in ROAs
+      take this propagation time into consideration.  E.g. if a new
+      route is to be announced in BGP, the operators SHOULD create the
+      ROA around three hours before BGP announcement, or it may not
+      propagate globally.
+    </t>
+  </section>
+
+<section anchor="Security" title="Security Considerations">
     
     <t>
      Despite common misconceptions and marketing, Route Origin
-     Validation is not a security protocol.  It is intended to catch
-     operational errors, and is easily gamed and attacked.
+     Validation is not a magic security protocol.  It is intended to
+     catch operational errors, and is easily gamed and attacked through,
+     for example, AS Path manipulation.  It is one tool in the prudent
+     operator's kit, and a good one.
     </t>
     
     <t>
@@ -372,6 +388,7 @@
     <?rfc include="reference.RFC.6482.xml"?>
     <?rfc include="reference.RFC.6811.xml"?>
     <?rfc include="reference.RFC.8174.xml"?>
+    <?rfc include="reference.RFC.8181.xml"?>
     <?rfc include="reference.RFC.8182.xml"?>
 <!--    <?rfc include="reference.RFC.8210.xml"?> -->
     <?rfc include="reference.RFC.8481.xml"?>
