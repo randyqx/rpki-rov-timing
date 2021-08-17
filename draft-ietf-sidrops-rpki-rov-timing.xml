@@ -348,8 +348,8 @@
       Should the supply chain include components or technologies other
       than those in IETF documents, the end effect SHOULD be the same;
       the router(s) SHOULD react to invalid AS origins within the same
-      overall time constraint, two hours at most from ROA creation at
-      the CA publication point to effect in the router.
+      overall time constraint, one hour, two at most, from ROA creation
+      at the CA publication point to effect in the router.
     </t>
     
   </section>
