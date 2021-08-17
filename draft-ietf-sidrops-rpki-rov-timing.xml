@@ -78,11 +78,14 @@
   <date />
 
   <abstract>
+    
     <t>
       This document explores, and makes recommendations for, timing of
       Resource Public Key Infrastructure publication of ROV data, their
-      propagation, and their use in Relying Parties and routers.
+      propagation, and their use in Relying Parties, caches, and
+      routers.
     </t>
+    
   </abstract>
 
   <note title="Requirements Language">
@@ -107,13 +110,13 @@
     <t>
       This document explores, and makes recommendations for, timing of
       Resource Public Key Infrastructure (RPKI) publication of ROV data,
-      their propagation, and their use in Relying Parties (RP), caches
+      their propagation, and their use in Relying Parties (RP), caches,
       and routers.
     </t>
 
     <t>
-      The RPKI supply chain from CAs to reach routers has the following
-      structure: 
+      The RPKI ROA supply chain from CAs to when they reach routers has
+      the following structure:
     </t>
     <t>
       <list style="hanging">
@@ -136,6 +139,7 @@
 	   more collected and verified caches of RPKI data which the RPs
 	   collect from the PPs.
 	 </t>
+	 
 	 <t>
 	   Currently RPs can pull from other RPs, thereby allowing a
 	   somewhat complex topology.
@@ -143,7 +147,7 @@
 
 	 <t hangText="Routers:">
 	   Validating routers fetch data from local RP caches using the
-	   RPKI to Router Protocol, <xref
+	   RPKI to Router Protocol, <xref target="RFC8210"/> and <xref
 	   target="I-D.ietf-sidrops-8210bis"/>.  Routers are clients of
 	   the caches.  Validating routers MUST have a trust
 	   relationship with, and a trusted transport channel to, any
@@ -176,18 +180,19 @@
 
     <t>
       Before the data can start on the CA to router supply chain, the
-      resource holder (operator) MUST create or delete the relevant ROA(s)
-      through the CA's operational interface(s). The operator is
-      responsible for anticipating their future needs for ROAs, be aware
-      of the propagation time from creating ROAs to effect on routing,
-      and SHOULD create, delete, or modify ROAs sufficiently in advance
-      of any needs in the routing system.
+      resource holder (operator) MUST create, modify, or delete the
+      relevant ROA(s) through the CA's operational interface(s).  The
+      operator is responsible for anticipating their future needs for
+      ROAs, be aware of the propagation time from creating ROAs to
+      effect on routing, and SHOULD create, delete, or modify ROAs
+      sufficiently in advance of any needs in the routing system.
     </t>
     
     <t>
-      There are questions of how frequently a CA publishes, how often an
+      There are questions of how frewwww3quently a CA publishes, how often an
       RP pulls, and how often routers pull from their RP(s).  Overall,
-      the router(s) SHOULD react within an hour of ROA publication.
+      the router(s) SHOULD react within an hour of ROA publication.  In
+      pessimistic circumstances, it could be two hours.
     </t>
 
     <t>
@@ -213,13 +218,13 @@
     <t>
       For BGP speaking router(s) pulling from the RP(s), five minutes to
       an hour is a wide window.  But, the RPKI-Rtr protocol does have
-      the Serial Notify PDU, the equivalent of DNS Notify, where the
-      cache tells the router that it has new data.  See <xref
-      target="router-pull"/>.
+      the Serial Notify PDU, the equivalent of DNS Notify <xref
+      target="RFC1996"/>, where the cache tells the router that it has
+      new data.  See <xref target="router-pull"/>.
     </t>
 
     <t>
-      We discuss each of these in detail below.
+      We discuss each of these in more detail below.
     </t>
 
    </section>
@@ -239,13 +244,13 @@
   </section>
 
   <section anchor="publish" title="Certification Authority Publishing">
+    
     <t>
-     A principal constraint on publication timing is ensuring the CRL
-     and Manifest (<xref target="RFC6486"/>) are atomically correct with
-     respect to the other repository data.  With rsync, the publication
-     point must be atomically correct before it becomes current.  RRDP
-     (<xref target="RFC8182"/>) is similar, the publication point must
-     be atomically correct before it is published.
+     One constraint on publication timing can be ensuring the CRL and
+     Manifest (<xref target="RFC6486"/>) are atomically correct with
+     respect to the other repository data.  With both rsync and RRDP
+     protocols, the publication point must be atomically correct before
+     it becomes current and is published.
     </t>
 
     <t>
@@ -257,22 +262,25 @@
   </section>
 
   <section anchor="rp-pull" title="Relying Party Fetching">
+    
     <t>
      rsync puts a load on RPKI publication point servers.  Therefore
      relying party caches have been discouraged from fetching more
      frequently than on the order of a half hour.  Times as long as a
-     day were even suggested.  We conclude that RPs using rsync SHOULD
+     day were even suggested.  We specify that RPs using rsync SHOULD
      pull from CA publication points every 30 to 60 minutes.
     </t>
+    
     <t>
-      With RRDP (<xref target="RFC8182"/>), such constraints are less
-      relevant.  <xref target="RFC8182"/> makes clear that polling as no
-      more frequently than once a minute is acceptable iff Relying
+      With RRDP (<xref target="RFC8182"/>), such constraints can be less
+      relevant.  <xref target="RFC8182"/> makes clear that polling as
+      frequently as once a minute is acceptable if and only if Relying
       Parties use the If-Modified-Since header and there is caching.
       Absent use of the If-Modified-Since header, the RRDP polling
       interval MUST NOT be more frequent than ten minutes.  Use of the
-      If-Modified-Since header is strongly recommended.
+      If-Modified-Since header is strongly RECOMMENDED.
     </t>
+    
     <t>
       Migration from rsync to RRDP in <xref
       target="I-D.ietf-sidrops-prefer-rrdp"/> is recommended.  During
@@ -282,6 +290,7 @@
       to rsync are as spread out as they would be if they used rsync
       initallly.
     </t>
+    
     <t>
       A number of timers are embedded in the X.509 RPKI data which
       should also be considered.  E.g., CRL publication commitments,
@@ -292,10 +301,12 @@
       day, would expose failure windows, especially in the face of
       transient network issues between the CA and RP.  To ameliorate
       this, RPs SHOULD update from CAs every hour or two at most.
-     </t>
+    </t>
+    
   </section>
 
   <section anchor="router-pull" title="Router Updating">
+    
     <t>
      The rate of change of ROA data is estimated to remain small, on the
      order of a few ROAs a minute, but with bursts.  Therefore, the
@@ -308,33 +319,39 @@
      same operator, routers are free to hammer the RPs as frequently as
      they wish.
     </t>
+    
     <t>
       A router SHOULD respond with a Serial Query when it receives a
       Serial Notify from a cache.  If a router can not respond
       appropriately to a Serial Notify, then it MUST send a periodic
       Serial Query no less frequently than once an hour.
     </t>
+    
   </section>
 
   <section anchor="router-effect" title="Effect on Routing">
+    
     <t>
       Once a router has received an End of Data PDU from a cache, the
       effect on Route Origin Validation MUST be a matter of seconds to a
       minute.  The router MAY allow incoming VRPs to affect Origin
       Validation as they arrive instead of waiting for the End of Data
       PDU.  See <xref target="I-D.ietf-sidrops-8210bis"/> for some
-      cautions regarding the arrival sequence of VRPs.
+      cautions regarding the arrival and processing sequence of VRPs.
     </t>
+    
   </section>
 
   <section anchor="alt-tech" title="Alternative Technologies">
+    
     <t>
       Should the supply chain include components or technologies other
       than those in IETF documents, the end effect SHOULD be the same;
       the router(s) SHOULD react to invalid AS origins within the same
-      overall time constraint, an hour at most from ROA creation at the
-      CA publication point to effect in the router.
+      overall time constraint, two hours at most from ROA creation at
+      the CA publication point to effect in the router.
     </t>
+    
   </section>
   
   <section anchor="op-expect" title="Operational Expectations">
@@ -379,9 +396,11 @@
   </section>
 
   <section anchor="IANA" title="IANA Considerations">
+    
     <t>
       None
     </t>
+    
   </section>
 
 </middle>
@@ -389,6 +408,7 @@
 <back>
     
   <references title="Normative References">
+    <?rfc include="reference.RFC.1996.xml"?>
     <?rfc include="reference.RFC.2119.xml"?>
     <?rfc include="reference.RFC.4271.xml"?>
     <?rfc include="reference.RFC.6481.xml"?>
@@ -398,7 +418,7 @@
     <?rfc include="reference.RFC.8174.xml"?>
     <?rfc include="reference.RFC.8181.xml"?>
     <?rfc include="reference.RFC.8182.xml"?>
-<!--    <?rfc include="reference.RFC.8210.xml"?> -->
+    <?rfc include="reference.RFC.8210.xml"?>
     <?rfc include="reference.RFC.8481.xml"?>
     <?rfc include="reference.I-D.ietf-sidrops-8210bis.xml"?>
     </references>
@@ -409,9 +429,11 @@
     </references>
 
   <section anchor="Acknowledgements" title="Acknowledgements">
+      
     <t>
       The authors wish to thank Massimiliano Stucchi and Ties de Kock.
     </t>
+    
   </section>
 
 </back>
