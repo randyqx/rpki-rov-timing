@@ -207,12 +207,12 @@
       put on publication services, cf. one notorious repository which
       was structured against specification.  RPs using RRDP impose less
       load.  As the infrastructure moves from rsync to RRDP <xref
-      target="I-D.ietf-sidrops-prefer-rrdp"/>, RRDP is
-      designed for quite frequent polling as long as Relying Parties use
-      the "If-Modified-Since" header and there is a caching
-      infrastructure.  For rsync, an hour would be the longest
-      acceptable window and half an hour the shortest.  See <xref
-      target="rp-pull"/>.
+      target="I-D.ietf-sidrops-prefer-rrdp"/>, RRDP is designed for
+      quite frequent polling as long as Relying Parties use the
+      If-Modified-Since (see <xref target="RFC7232"/>) header and there
+      is a caching infrastructure.  For rsync, an hour would be the
+      longest acceptable window and half an hour the shortest.  See
+      <xref target="rp-pull"/>.
     </t>
 
     <t>
@@ -302,6 +302,18 @@
       transient network issues between the CA and RP.  To ameliorate
       this, RPs SHOULD update from CAs at least as frequently as once an
       hour.
+    </t>
+
+    <t>
+      In summary, the following timing constraints SHOULD be applied to
+      data update: RPs SHOULD update from CAs at least once an hour.  To
+      avoid excess load, RPs SHOULD NOT update via rsync more frequently
+      than every 30 minutes.  RPs using RRDP SHOULD NOT need to update
+      more frequently than every 10 minutes.  Some form of timing jitter
+      MUST be applied to ensure load distribution across the community.
+      RPs SHOULD NOT force data fetch to be on the hour or similar times.
+      Publication Points SHOULD deploy RRDP services which honor
+      If-Modified-Since.
     </t>
 
     <t>
@@ -422,6 +434,7 @@
     <?rfc include="reference.RFC.6486.xml"?>
     <?rfc include="reference.RFC.6482.xml"?>
     <?rfc include="reference.RFC.6811.xml"?>
+    <?rfc include="reference.RFC.7232.xml"?>
     <?rfc include="reference.RFC.8174.xml"?>
     <?rfc include="reference.RFC.8181.xml"?>
     <?rfc include="reference.RFC.8182.xml"?>
