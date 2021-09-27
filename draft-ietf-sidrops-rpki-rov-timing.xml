@@ -247,10 +247,10 @@
     
     <t>
      One constraint on publication timing can be ensuring the CRL and
-     Manifest (<xref target="RFC6486"/>) are atomically correct with
-     respect to the other repository data.  With both rsync and RRDP
-     protocols, the publication point must be atomically correct before
-     it becomes current and is published.
+     Manifest (<xref target="RFC6486"/>) are consistent with each other
+     and with respect to the other repository data.  With both rsync and
+     RRDP protocols, the publication point MUST be consistent before it
+     becomes current and is published.
     </t>
 
     <t>
@@ -285,7 +285,7 @@
       Migration from rsync to RRDP in <xref
       target="I-D.ietf-sidrops-prefer-rrdp"/> is recommended.  During
       dual RRDP/rsync operation, should an RP need to fall over from
-      RRDP to rsync, a uniformly distribued jittered delay with a mean
+      RRDP to rsync, a uniformly distributed jittered delay with a mean
       of half the rsync interval SHOULD be used; so clients falling over
       to rsync are as spread out as they would be if they used rsync
       initallly.
@@ -300,7 +300,14 @@
       hour sliding timers, when combined with fetching RPKI data once a
       day, would expose failure windows, especially in the face of
       transient network issues between the CA and RP.  To ameliorate
-      this, RPs SHOULD update from CAs every hour or two at most.
+      this, RPs SHOULD update from CAs at least as frequently as once an
+      hour.
+    </t>
+
+    <t>
+      In general, CAs should have Manifest, CRL, ... timers of a few
+      days to allow relying party operators to go away for the weekend
+      and not fear for their control plane.
     </t>
     
   </section>
