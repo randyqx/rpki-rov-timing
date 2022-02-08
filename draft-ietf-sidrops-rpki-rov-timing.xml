@@ -317,9 +317,10 @@
     </t>
 
     <t>
-      In general, CAs should have Manifest, CRL, ... timers of a few
-      days to allow relying party operators to go away for the weekend
-      and not fear for their control plane.
+      In general, CAs should have Manifest, CRL, and other "baked in"
+      timers have an expiry of a few days to allow relying party
+      operators to go away for a long weekend and not fear for their
+      control plane.
     </t>
     
   </section>
